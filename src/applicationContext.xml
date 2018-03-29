@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop="http://www.springframework.org/schema/aop" 
+        xmlns:tx="http://www.springframework.org/schema/tx" 
+        xmlns:context="http://www.springframework.org/schema/context" 
+        xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        		http://www.springframework.org/schema/beans/spring-beans.xsd
+        		http://www.springframework.org/schema/tx 
+        		http://www.springframework.org/schema/tx/spring-tx.xsd
+        		http://www.springframework.org/schema/aop 
+        		http://www.springframework.org/schema/aop/spring-aop.xsd
+        		http://www.springframework.org/schema/context 
+        		http://www.springframework.org/schema/context/spring-context.xsd">
+
+		<!-- 配置数据源 (连接池)-->
+		<!-- 
+			bean标签的作用是：创建对象  
+			ComboPooledDataSource dataSource = new ComboPooledDataSource();
+			dataSource.setDriverClass("com.mysql.jdbc.Driver");
+			...
+		 -->
+		<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+			<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+			<property name="jdbcUrl" value="jdbc:mysql:///infopub?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+			<property name="user" value="root"></property>
+			<property name="password" value="root"></property>
+		</bean>
+		
+	<!-- 配置SessionFactory -->
+	<bean id="sessionFactory" 
+			class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<!-- 1、连接数据库的 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 2、hibernate基本配置的 -->
+		<property name="hibernateProperties">
+			<props>
+				<!-- 数据库的方言-->
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<!-- 是否显示sql语句-->
+				<prop key="hibernate.show_sql">true</prop>
+				<!-- 是否格式化sql语句-->
+				<prop key="hibernate.format_sql">false</prop>
+				<!-- 采用何种方式生成数据库表结构 -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<!-- 是spring把sesion绑定到当前线程上的配置 -->
+				<prop key="hibernate.current_session_context_class">
+					org.springframework.orm.hibernate5.SpringSessionContext
+				</prop>
+			</props>
+		</property>
+		<!-- 3、指定扫描映射注解的包-->
+		<property name="packagesToScan">
+			<array>
+				<value>org.pxxy.domain</value>
+			</array>
+		</property>
+	</bean>
+	
+	<!-- 配置spring运行要扫描的包 -->
+	<context:component-scan base-package="org.pxxy"/>
+	
+	<!-- 开启spring对注解事务的支持 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<!-- 配置HibernateTemplate:此对象封闭了session -->
+	<!-- 
+			bean标签的作用是：创建对象  
+			HibernateTemplate hibernateTemplate = new HibernateTemplate();
+			hibernateTemplate.setSessionFactory(sessionFactory);
+			...
+		 -->
+	<bean id="hibernateTemplate" 
+				class="org.springframework.orm.hibernate5.HibernateTemplate">
+		<!-- 注入SessionFactory -->
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager" 
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<!-- 注入SessionFactory -->
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>	
+	
+		<!-- 开启spring对注解事务的支持 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>	
+	
+	
+</beans>
