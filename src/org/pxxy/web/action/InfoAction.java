@@ -142,7 +142,7 @@ public class InfoAction extends ActionSupport implements ModelDriven<Info>{
 		
 
 		private int currentPage=1; //当前页
-		private int pageSize = 2;//默认每页显示条数
+		private int pageSize = 10;//默认每页显示条数
 		private int cid;  //商品类别编号
 		private PageBean<Info> pb;  // ${pb}
 		public int getCurrentPage() {
