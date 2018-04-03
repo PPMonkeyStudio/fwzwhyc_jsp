@@ -1,38 +1,21 @@
 package org.pxxy.domain;
 
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import java.util.Date;
-import org.hibernate.annotations.GenericGenerator;
 
-@Entity
-@Table(name="info")
 public class Info {
-	@Id
-	@GeneratedValue(generator="infoId")
-	@GenericGenerator(name="infoId",strategy="native")
-	private Integer infoId;//信息编号
-	private String title;//标题（用于列表页面）
-	@ManyToOne
-	@JoinColumn(name="cid",referencedColumnName="cid")
+	private Integer infoId;// 信息编号
+	private String title;// 标题（用于列表页面）
 	private Category category;
-	private String contentTitle;//用于信息详细页面
-	private String contentAbstract;//内容摘要
-	@Column(name="content", columnDefinition="TEXT", nullable=true)
-	private String content;//信息内容
-	private String picPath;//预览图片路径
-	private String author;//作者（来源）
-	private Date publishTime;//发布时间
-	
+	private String contentTitle;// 用于信息详细页面
+	private String contentAbstract;// 内容摘要
+	private String content;// 信息内容
+	private String picPath;// 预览图片路径
+	private String author;// 作者（来源）
+	private Date publishTime;// 发布时间
+
 	private String publishStatus;
-	private Integer paiXu;	
-	
+	private Integer paiXu;
+
 	public String getContentTitle() {
 		return contentTitle;
 	}
@@ -88,7 +71,7 @@ public class Info {
 	public void setPaiXu(Integer paiXu) {
 		this.paiXu = paiXu;
 	}
-	
+
 	public Integer getInfoId() {
 		return infoId;
 	}
@@ -104,14 +87,14 @@ public class Info {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 	public Category getCategory() {
 		return category;
 	}
 
 	public void setCategory(Category category) {
 		this.category = category;
-	}	
+	}
 
 	public Date getPublishTime() {
 		return publishTime;
