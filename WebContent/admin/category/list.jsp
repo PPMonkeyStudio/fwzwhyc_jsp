@@ -48,7 +48,7 @@
 						<td><c:out value="${category.cid}" /></td>
 						<td><c:out value="${category.cname}" /></td>
 						<td><a
-							href='${path}admin/editCategory.action?cid=${category.cid}'
+							href='${path}category?option=editCategory&cid=${category.cid}'
 							class="tablelink">更新</a> <a href='#'
 							onclick="del(${category.cid})" class="tablelink">删除</a></td>
 					</tr>

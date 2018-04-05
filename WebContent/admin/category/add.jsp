@@ -29,8 +29,8 @@
 		<div class="formtitle">
 			<span>添加信息类别</span>
 		</div>
-		<form action="${path}category?option=addCategory" name="ff" method="post"
-			onsubmit="return checkValue()">
+		<form action="${path}category?option=addCategory" name="ff"
+			method="post" onsubmit="return checkValue()">
 			<ul class="forminfo">
 				<li><label style="width: 120px;">类别id（<font
 						style="color: Red; font-weight: bolder;">*</font>）：
@@ -46,7 +46,7 @@
 	</div>
 	<script>
 		function goback() {
-			window.location.href = "${path }admin/findAllCategory";
+			window.location.href = "${path}category?option=findAllCategory";
 		}
 
 		function checkValue() {

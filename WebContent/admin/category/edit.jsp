@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
@@ -30,7 +31,7 @@
 		<div class="formtitle">
 			<span>修改信息类别</span>
 		</div>
-		<form action="${path }admin/updateCategory" name="ff" method="post"
+		<form action="${path}category?option=updateCategory" name="ff" method="post"
 			onsubmit="return checkValue()">
 			<ul class="forminfo">
 
@@ -50,7 +51,7 @@
 	</div>
 	<script>
 		function goback() {
-			window.location.href = "${path }admin/findAllCategory";
+			window.location.href = "${path }category?option=findAllCategory";
 		}
 
 		function checkValue() {

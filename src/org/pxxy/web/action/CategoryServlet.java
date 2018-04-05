@@ -46,6 +46,14 @@ public class CategoryServlet extends HttpServlet {
 			delCategory(request, response);
 			break;
 		}
+		case "editCategory": {
+			editCategory(request, response);
+			break;
+		}
+		case "updateCategory": {
+			updateCategory(request, response);
+			break;
+		}
 		default: {
 
 		}
@@ -115,6 +123,42 @@ public class CategoryServlet extends HttpServlet {
 		category.setCid(Integer.parseInt(request.getParameter("cid")));
 
 		categoryService.delCategory(category);
+		/*
+		 * 重新查询所有类别
+		 */
+		list = categoryService.findAllCategory();
+
+		request.setAttribute("list", list);
+
+		request.getRequestDispatcher("/admin/category/list.jsp").forward(request, response);
+	}
+
+	/*
+	 * 对已有类别进行编辑
+	 */
+	public void editCategory(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		categoryService = new CategoryServiceImpl();
+
+		Category category = categoryService.findCategoryByCid(Integer.parseInt(request.getParameter("cid")));
+
+		request.setAttribute("category", category);
+
+		request.getRequestDispatcher("/admin/category/edit.jsp").forward(request, response);
+	}
+
+	/*
+	 * 
+	 */
+	private void updateCategory(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		categoryService = new CategoryServiceImpl();
+		Category category = new Category();
+
+		category.setCid(Integer.parseInt(request.getParameter("cid")));
+		category.setCname(request.getParameter("cname"));
+		categoryService.updateCategory(category);
 		/*
 		 * 重新查询所有类别
 		 */

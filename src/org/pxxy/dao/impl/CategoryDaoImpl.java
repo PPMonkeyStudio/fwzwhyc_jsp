@@ -113,12 +113,54 @@ public class CategoryDaoImpl implements CategoryDao {
 
 	@Override
 	public Category findCategoryByCid(Integer cid) {
-		return null;
+
+		Category category = null;
+
+		try {
+
+			connection = ConnectionMySQL.getCon();
+
+			String sql = "select * from category where cid='" + cid + "'";
+
+			preparedStmt = connection.prepareStatement(sql);
+
+			resultSet = preparedStmt.executeQuery();
+
+			if (resultSet.next()) {
+
+				category = new Category();
+
+				category.setCid(resultSet.getInt("cid"));
+
+				category.setCname(resultSet.getString("cname"));
+				return category;
+			} else {
+				return null;
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+			return null;
+
+		}
+
 	}
 
 	@Override
 	public boolean updateCategory(Category category) {
-		return true;
+		try {
+			connection = ConnectionMySQL.getCon();
+			String sql = "update category set cname='" + category.getCname() + "' where cid ='" + category.getCid()
+					+ "'";
+			stmt = connection.createStatement();
+			stmt.executeUpdate(sql);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
