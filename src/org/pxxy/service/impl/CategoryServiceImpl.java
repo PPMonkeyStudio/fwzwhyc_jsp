@@ -26,6 +26,11 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public boolean delCategory(Category category) {
 		categoryDao = new CategoryDaoImpl();
+
+		/*
+		 * 删除类别，应当将所有属于此类别的新闻均删除
+		 */
+
 		return categoryDao.delCategory(category);
 	}
 

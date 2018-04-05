@@ -6,16 +6,6 @@ public class Category {
 
 	private String cname;
 
-	private Integer pid;
-
-	public Integer getPid() {
-		return pid;
-	}
-
-	public void setPid(Integer pid) {
-		this.pid = pid;
-	}
-
 	public Integer getCid() {
 		return cid;
 	}

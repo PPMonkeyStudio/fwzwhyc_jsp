@@ -42,6 +42,10 @@ public class CategoryServlet extends HttpServlet {
 			addCategory(request, response);
 			break;
 		}
+		case "delCategory": {
+			delCategory(request, response);
+			break;
+		}
 		default: {
 
 		}
@@ -70,6 +74,9 @@ public class CategoryServlet extends HttpServlet {
 
 	}
 
+	/*
+	 * 添加新的类别
+	 */
 	public void addCategory(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -96,6 +103,27 @@ public class CategoryServlet extends HttpServlet {
 
 	}
 
+	/*
+	 * 删除一条类别
+	 */
+
+	public void delCategory(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		categoryService = new CategoryServiceImpl();
+		Category category = new Category();
+
+		category.setCid(Integer.parseInt(request.getParameter("cid")));
+
+		categoryService.delCategory(category);
+		/*
+		 * 重新查询所有类别
+		 */
+		list = categoryService.findAllCategory();
+
+		request.setAttribute("list", list);
+
+		request.getRequestDispatcher("/admin/category/list.jsp").forward(request, response);
+	}
 	/*
 	 * 
 	 */

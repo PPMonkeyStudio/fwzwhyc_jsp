@@ -59,7 +59,7 @@
 			function del(cid){
 				if(window.confirm("您确定要删除吗？"))
 				{
-				   location.href="${path}admin/delCategory.action?cid="+cid;
+				   location.href="${path}category?option=delCategory&cid="+cid;
 				 }
 			}
 		</script>

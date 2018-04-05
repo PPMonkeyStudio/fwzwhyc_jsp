@@ -52,8 +52,6 @@ public class CategoryDaoImpl implements CategoryDao {
 
 				category.setCname(resultSet.getString("cname"));
 
-				category.setPid(resultSet.getInt("pid"));
-
 				categoryList.add(category);
 
 			}
@@ -76,7 +74,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
 			connection = ConnectionMySQL.getCon();
 
-			String sql = "insert into category values('" + category.getCid() + "','" + category.getCname() + "','1')";
+			String sql = "insert into category values('" + category.getCid() + "','" + category.getCname() + "')";
 
 			preparedStmt = connection.prepareStatement(sql);
 
@@ -94,7 +92,23 @@ public class CategoryDaoImpl implements CategoryDao {
 
 	@Override
 	public boolean delCategory(Category category) {
-		return true;
+
+		try {
+
+			connection = ConnectionMySQL.getCon();
+
+			String sql = "delete from category where cid='" + category.getCid() + "' ";
+
+			stmt = connection.prepareStatement(sql);
+
+			stmt.executeUpdate(sql);
+
+			return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
