@@ -45,7 +45,7 @@
 				<span><img src="images/leftico01.png" /></span>信息管理
 			</div>
 			<ul class="menuson">
-				<li><cite></cite><a href="${path}info?option=findInfosByPage"
+				<li><cite></cite><a href="${path}info?option=findInfosByPage&currentPage=1"
 					target="rightFrame">信息列表</a><i></i></li>
 			</ul>
 		</dd>

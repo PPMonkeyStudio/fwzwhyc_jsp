@@ -1,14 +1,12 @@
 package org.pxxy.web.action;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.pxxy.domain.Category;
 import org.pxxy.domain.Info;
 import org.pxxy.domain.PageBean;
 import org.pxxy.service.CategoryService;
@@ -20,23 +18,10 @@ public class InfoServlet extends HttpServlet {
 	/*
 	 * 
 	 */
-	private Info info = new Info();
-	private String keywords;
-	private List<Category> categorylist;
 	private CategoryService categoryService;
 	private InfoService infoService;
 	/*
 	 * 
-	 */
-	private int currentPage = 1; // 当前页
-	private int pageSize = 10;// 默认每页显示条数
-	private int cid; // 商品类别编号
-	private PageBean<Info> pb; // ${pb}
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.
-	 * HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
 
 	@Override
@@ -66,14 +51,32 @@ public class InfoServlet extends HttpServlet {
 	/*
 	 * 
 	 */
+	private int pageSize = 10;// 默认每页显示条数
+	/*
+	 * 
+	 */
+
 	public void findInfosByPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		infoService = new InfoServiceImpl();
+
+		String keywords = request.getParameter("keywords");
+
+		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+
 		if (keywords != null) {
 			keywords = keywords.trim();
+		} else {
+			keywords = "";
 		}
-		pb = infoService.findInfosByPage(currentPage, pageSize, keywords);
+
+		PageBean<Info> pb = infoService.findInfosByPage(currentPage, pageSize, keywords);
+
+		request.setAttribute("pb", pb);
+
+		request.setAttribute("keywords", keywords);
+
 		request.getRequestDispatcher("/admin/info/list.jsp").forward(request, response);
 	}
 

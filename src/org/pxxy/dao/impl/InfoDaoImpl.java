@@ -1,11 +1,23 @@
 package org.pxxy.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.pxxy.dao.InfoDao;
 import org.pxxy.domain.Info;
+import org.pxxy.utils.ConnectionMySQL;
 
 public class InfoDaoImpl implements InfoDao {
+
+	public static Connection connection = null;
+	public static PreparedStatement preparedStmt = null;
+	public static Statement stmt = null;
+	public static ResultSet resultSet = null;
 
 	@Override
 	public List<Info> findAllInfo() {
@@ -94,12 +106,71 @@ public class InfoDaoImpl implements InfoDao {
 
 	@Override
 	public int getInfoCount(String keywords) {
-		return 0;
+
+		try {
+			connection = ConnectionMySQL.getCon();
+
+			String sql = "select count(*) count from info where title like '%" + keywords + "%' ";
+
+			System.out.println(sql);
+
+			preparedStmt = connection.prepareStatement(sql);
+
+			resultSet = preparedStmt.executeQuery();
+
+			resultSet.next();
+
+			return resultSet.getInt("count");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
 	}
 
 	@Override
 	public List<Info> findByPage(int currentPage, int pageSize, String keywords) {
-		return null;
+		try {
+			connection = ConnectionMySQL.getCon();
+
+			String sql = "select *  from info where title like '%" + keywords + "%' limit " + Integer.toString(pageSize)
+					+ " offset " + Integer.toString((currentPage - 1) * 10);
+
+			System.out.println(sql);
+
+			preparedStmt = connection.prepareStatement(sql);
+
+			resultSet = preparedStmt.executeQuery();
+
+			List<Info> infoList = new ArrayList<Info>();
+
+			Info info = null;
+
+			while (resultSet.next()) {
+				info = new Info();
+				info.setInfoId(resultSet.getInt("infoId"));
+				info.setAuthor(resultSet.getString("author"));
+				info.setContent(resultSet.getString("content"));
+				info.setContentAbstract(resultSet.getString("contentAbstract"));
+				info.setContentTitle(resultSet.getString("contentTitle"));
+				info.setPaiXu(resultSet.getInt("paiXu"));
+				info.setPicPath(resultSet.getString("picPath"));
+				info.setPublishStatus(resultSet.getString("publishStatus"));
+				info.setPublishTime(resultSet.getString("publishTime"));
+				info.setTitle(resultSet.getString("title"));
+				info.setCid(resultSet.getInt("cid"));
+				/*
+				 * 
+				 */
+				infoList.add(info);
+			}
+
+			return infoList;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

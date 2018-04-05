@@ -53,7 +53,6 @@
 		function goback() {
 			window.location.href = "${path }category?option=findAllCategory";
 		}
-
 		function checkValue() {
 			var str = document.getElementById("cid").value;
 			if (str.length < 1) {
@@ -78,7 +77,6 @@
 				document.getElementById("cname").focus();
 				return false;
 			}
-
 			return true;
 		}
 	</script>

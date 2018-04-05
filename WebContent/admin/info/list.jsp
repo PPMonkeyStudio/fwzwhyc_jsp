@@ -65,15 +65,15 @@
 	<div class="rightinfo">
 		<div class="tools">
 			<ul class="toolbar">
-				<li class="click"><a href="${path }admin/info/add.jsp"><span><img
-							src="images/t01.png" /></span>添加信息</a></li>
+				<li class="click"><a href="${path}admin/info/add.jsp"><span><img
+							src="${path}admin/images/t01.png" /></span>添加信息</a></li>
 			</ul>
 		</div>
-		<form action="${path }admin/findInfosByPage" id="infoListForm"
-			name="ff" method="post">
+		<form action="${path}info?option=findInfosByPage&currentPage=1"
+			id="infoListForm" name="ff" method="post">
 			<ul class="seachform">
 				<li><label>标题关键词</label><input name="keywords"
-					value="${keywords }" type="text" style="width: 400px;"
+					value="${keywords}" type="text" style="width: 400px;"
 					class="scinput" /></li>
 				<li><label>&nbsp;</label><input name="" type="submit"
 					class="scbtn" value="查询" /></li>
@@ -92,63 +92,71 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:if test="${!empty pb.list}">
-					<s:iterator value="pb.list" id="info">
-						<tr>
-							<td><s:property value="#info.infoId" /></td>
-							<td><s:property value="#info.title" /></td>
-							<td><s:property value="#info.paiXu" /></td>
-							<td><s:if test="#info.publishStatus == 1">
+				<c:choose>
+					<c:when test="${!empty pb.list}">
+						<c:forEach items="${pb.list}" var="info">
+							<tr>
+								<td><c:out value="${info.infoId}" /></td>
+								<td><c:out value="${info.title}" /></td>
+								<td><c:out value="${info.paiXu}" /></td>
+								<td><c:choose>
+										<c:when test="#info.publishStatus == 1">
 									是
-			                    </s:if> <s:else>
+			                    </c:when>
+										<c:otherwise>
 			                    	否
-			                    </s:else></td>
-							<td><s:date name="#info.publishTime"
-									format="yyyy-MM-dd HH:mm:ss" /></td>
-							<td><s:property value="#info.category.cname" /></td>
-							<td><a
-								href='${path}admin/editInfo.action?infoId=<s:property value="#info.infoId"/>'>更新</a>
-								&nbsp;|&nbsp; <a href='#'
-								onclick="del(<s:property value="#info.infoId"/>)">删除</a></td>
-						</tr>
-					</s:iterator>
-				</c:if>
-				<c:if test="${empty pb.list}">
-					<div>
-						<tr>
-							<td colspan="7" align="center">暂无信息</td>
-						</tr>
-					</div>
-				</c:if>
+			                    </c:otherwise>
+									</c:choose></td>
+								<td><c:out value="${info.publishTime}" /></td>
+								<td><c:out value="${info.category.cname}" /></td>
+								<td><a
+									href='${path}admin/editInfo.action?infoId=<c:out value="${info.infoId}" />'>更新</a>
+									&nbsp;|&nbsp; <a href='#'
+									onclick="del(<c:out value="${info.infoId}" />)">删除</a></td>
+							</tr>
+						</c:forEach>
+					</c:when>
+				</c:choose>
+				<c:choose>
+					<c:when test="${empty pb.list}">
+						<div>
+							<tr>
+								<td colspan="7" align="center">暂无信息</td>
+							</tr>
+						</div>
+					</c:when>
+				</c:choose>
 				<tr>
 					<td colspan="7" align="center">
 						<div class="pagination">
 							第
-							<s:property value="#request.pb.currentPage" />
+							<c:out value="${pb.currentPage}" />
 							页 &nbsp;&nbsp; 共
-							<s:property value="#request.pb.totalPage" />
+							<c:out value="${pb.totalPage}" />
 							页 &nbsp;&nbsp; 共
-							<s:property value="#request.pb.count" />
+							<c:out value="${pb.count}" />
 							条信息
 							<div style="height: 10px;"></div>
-							<s:if test="#request.pb.currentPage == 1"> 首页&nbsp;&nbsp;上一页 </s:if>
-							<s:else>
-								<a href='#' onclick="fy(1)">首页</a>
-								<a href='#'
-									onclick="fy(<s:property value="#request.pb.currentPage - 1"/>)">上一页</a>
-							</s:else>
-							<s:if test="#request.pb.currentPage != #request.pb.totalPage">
-								<a href='#'
-									onclick="fy(<s:property value="#request.pb.currentPage + 1"/>)">下一页</a>
-								<a href='#'
-									onclick="fy(<s:property value="#request.pb.totalPage"/>)">尾页</a>
-							</s:if>
-							<s:else>下一页&nbsp;&nbsp;尾页</s:else>
+							<c:choose>
+								<c:when test="#request.pb.currentPage == 1"> 首页&nbsp;&nbsp;上一页 </c:when>
+								<c:otherwise>
+									<a href='#' onclick="fy(1)">首页</a>
+									<a href='#'
+										onclick="fy(<c:out value="${pb.currentPage - 1}"/>)">上一页</a>
+								</c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="#request.pb.currentPage != #request.pb.totalPage">
+									<a href='#'
+										onclick="fy(<c:out value="${pb.currentPage + 1}"/>)">下一页</a>
+									<a href='#' onclick="fy(<c:out value="${pb.totalPage}"/>)">尾页</a>
+								</c:when>
+								<c:otherwise>下一页&nbsp;&nbsp;尾页</c:otherwise>
+							</c:choose>
 							&nbsp;&nbsp; 跳转至 <input type="text"
 								style="height: 22px; border: 1px solid #888; width: 30px; border-radius: 0.2rem;"
 								name="page" id="page"> 页 <a href='#'
 								onclick="validate()">跳转</a>
-
 						</div>
 					</td>
 				</tr>
@@ -166,7 +174,7 @@
 		function validate()
         {
             var page = document.getElementById("page").value;
-            if(page > <s:property value="#request.pb.totalPage"/> || page <= 0 )
+            if(page > <c:out value="${request.pb.totalPage}"/> || page <= 0 )
             {
                 alert("你输入的页数大于最大页数或小于最小页面，页面将跳转到首页！");
                 fy(1)

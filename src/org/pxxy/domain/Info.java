@@ -1,20 +1,26 @@
 package org.pxxy.domain;
 
-import java.util.Date;
-
 public class Info {
 	private Integer infoId;// 信息编号
+	private String author;// 作者（来源）
 	private String title;// 标题（用于列表页面）
-	private Category category;
 	private String contentTitle;// 用于信息详细页面
 	private String contentAbstract;// 内容摘要
 	private String content;// 信息内容
 	private String picPath;// 预览图片路径
-	private String author;// 作者（来源）
-	private Date publishTime;// 发布时间
 
-	private String publishStatus;
-	private Integer paiXu;
+	private String publishTime;// 发布时间
+	private String publishStatus;// 是否发布
+	private Integer paiXu;// 排序
+	private Integer cid;// 所属类别编号
+	/*
+	 * 类别
+	 */
+	private Category category;
+
+	/*
+	 * 
+	 */
 
 	public String getContentTitle() {
 		return contentTitle;
@@ -96,11 +102,19 @@ public class Info {
 		this.category = category;
 	}
 
-	public Date getPublishTime() {
+	public String getPublishTime() {
 		return publishTime;
 	}
 
-	public void setPublishTime(Date publishTime) {
+	public void setPublishTime(String publishTime) {
 		this.publishTime = publishTime;
+	}
+
+	public Integer getCid() {
+		return cid;
+	}
+
+	public void setCid(Integer cid) {
+		this.cid = cid;
 	}
 }
