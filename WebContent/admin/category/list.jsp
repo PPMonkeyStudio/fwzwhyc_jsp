@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
@@ -29,8 +30,8 @@
 	<div class="rightinfo">
 		<div class="tools">
 			<ul class="toolbar">
-				<li class="click"><a href="${path }admin/category/add.jsp"><span><img
-							src="images/t01.png" /></span>添加信息类别</a></li>
+				<li class="click"><a href="${path}admin/category/add.jsp"><span><img
+							src="${path}admin/images/t01.png" /></span>添加信息类别</a></li>
 			</ul>
 		</div>
 		<table style="width: 700px;" class="tablelist">
@@ -42,17 +43,16 @@
 				</tr>
 			</thead>
 			<tbody>
-				<s:iterator value="list" id="category">
+				<c:forEach items="${list}" var="category">
 					<tr>
-						<td><s:property value="#category.cid" /></td>
-						<td><s:property value="#category.cname" /></td>
+						<td><c:out value="${category.cid}" /></td>
+						<td><c:out value="${category.cname}" /></td>
 						<td><a
-							href='${path}admin/editCategory.action?cid=<s:property value="#category.cid"/>'
+							href='${path}admin/editCategory.action?cid=${category.cid}'
 							class="tablelink">更新</a> <a href='#'
-							onclick="del(<s:property value="#category.cid"/>)"
-							class="tablelink">删除</a></td>
+							onclick="del(${category.cid})" class="tablelink">删除</a></td>
 					</tr>
-				</s:iterator>
+				</c:forEach>
 			</tbody>
 		</table>
 		<script type="text/javascript">

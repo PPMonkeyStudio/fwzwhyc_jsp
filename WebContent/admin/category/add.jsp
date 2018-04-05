@@ -29,10 +29,9 @@
 		<div class="formtitle">
 			<span>添加信息类别</span>
 		</div>
-		<form action="${path }admin/addCategory" name="ff" method="post"
+		<form action="${path}category?option=addCategory" name="ff" method="post"
 			onsubmit="return checkValue()">
 			<ul class="forminfo">
-
 				<li><label style="width: 120px;">类别id（<font
 						style="color: Red; font-weight: bolder;">*</font>）：
 				</label><input id="cid" name="cid" type="text" class="dfinput" /><i>类别id为纯数字</i></li>
@@ -42,7 +41,6 @@
 				<li><label>&nbsp;</label><input name="" type="submit"
 					class="btn" value="确认添加" /> &nbsp;&nbsp;<input name=""
 					type="button" onclick="goback();" class="btn" value="返回列表" /></li>
-
 			</ul>
 		</form>
 	</div>

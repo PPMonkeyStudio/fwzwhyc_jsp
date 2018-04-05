@@ -1,20 +1,21 @@
 package org.pxxy.service;
 
 import java.util.List;
+
 import org.pxxy.domain.Category;
 
 public interface CategoryService {
 
-	List<Category> findAllCategory();
+	public List<Category> findAllCategory();
 
-	void addCategory(Category category);
+	public boolean addCategory(Category category);
 
-	void delCategory(Category category);
+	public boolean delCategory(Category category);
 
-	Category findCategoryByCid(Integer integer);
+	public Category findCategoryByCid(Integer integer);
 
-	void updateCategory(Category category);
+	public boolean updateCategory(Category category);
 
-	List<Category> findNaviCategory();
+	public List<Category> findNaviCategory();
 
 }

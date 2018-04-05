@@ -13,12 +13,12 @@
 
 <frameset rows="88,*" cols="*" frameborder="no" border="0"
 	framespacing="0">
-	<frame src="${path }admin/top.jsp" name="topFrame" scrolling="no"
+	<frame src="${path}admin/top.jsp" name="topFrame" scrolling="no"
 		noresize="noresize" id="topFrame" title="topFrame" />
 	<frameset cols="187,*" frameborder="no" border="0" framespacing="0">
-		<frame src="${path }admin/left.jsp" name="leftFrame" scrolling="no"
+		<frame src="${path}admin/left.jsp" name="leftFrame" scrolling="no"
 			noresize="noresize" id="leftFrame" title="leftFrame" />
-		<frame src="${path }admin/index.jsp" name="rightFrame" id="rightFrame"
+		<frame src="${path}admin/index.jsp" name="rightFrame" id="rightFrame"
 			title="rightFrame" />
 	</frameset>
 </frameset>
@@ -26,5 +26,6 @@
 	<body>
 	</body>
 </noframes>
+
 </html>
 

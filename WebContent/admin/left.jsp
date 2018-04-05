@@ -45,7 +45,7 @@
 				<span><img src="images/leftico01.png" /></span>信息管理
 			</div>
 			<ul class="menuson">
-				<li><cite></cite><a href="${path }admin/findInfosByPage"
+				<li><cite></cite><a href="${path}info?option=findInfosByPage"
 					target="rightFrame">信息列表</a><i></i></li>
 			</ul>
 		</dd>
@@ -55,8 +55,8 @@
 				<span><img src="images/leftico03.png" /></span>信息类别管理
 			</div>
 			<ul class="menuson">
-				<li><cite></cite><a href="${path }admin/findAllCategory"
-					target="rightFrame">信息类别列表</a><i></i></li>
+				<li><cite></cite><a
+					href="${path}category?option=findAllCategory" target="rightFrame">信息类别列表</a><i></i></li>
 			</ul>
 		</dd>
 
