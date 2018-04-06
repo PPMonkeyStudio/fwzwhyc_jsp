@@ -17,36 +17,9 @@
 <title>添加信息</title>
 <link href="${path }admin/css/style.css" rel="stylesheet"
 	type="text/css" />
-<link rel="stylesheet" href="../kindeditor/themes/default/default.css" />
-<link rel="stylesheet" href="../kindeditor/plugins/code/prettify.css" />
-<script charset="utf-8" src="../kindeditor/kindeditor.js"></script>
-<script charset="utf-8" src="../kindeditor/lang/zh_CN.js"></script>
-<script charset="utf-8" src="../kindeditor/plugins/code/prettify.js"></script>
-<script type="text/javascript" src="../../js/jquery.min.js"></script>
-
 <script type="text/javascript" src="../../js/jquery-1.8.0.min.js"></script>
-<script type="text/javascript" src="../../js/ajaxfileupload.js"></script>
 
-<script type="text/javascript">
-	KindEditor.ready(function(K) {
-		var editor = K.create('textarea[id="content"]', {
-			cssPath : '../kindeditor/plugins/code/prettify.css',
-			uploadJson : '../kindeditor/jsp/upload_json.jsp',
-			fileManagerJson : '../kindeditor/jsp/file_manager_json.jsp',
-			allowFileManager : true,
-			afterBlur : function() {
-				this.sync();
-				K.ctrl(document, 13, function() {
-					K("form[name='ff']")[0].submit();
-				});
-				K.ctrl(this.edit.doc, 13, function() {
-					K("form[name='ff']")[0].submit();
-				});
-			}
-		});
-		prettyPrint();
-	});
-</script>
+
 <script type="text/javascript">
 	$(document).ready(
 			function() {
@@ -110,31 +83,9 @@
 					name="paiXu" type="text" value="10000" class="dfinput" /><i></i></li>
 				<li><label style="width: 150px;">图片：</label><input id="file1"
 					name="file" type="file" onchange="fileUpload();" /><i></i></li>
-				<script type="text/javascript">
-					function fileUpload() {
-						var files = [ 'file1' ]; //将上传三个文件 ID 分别为file2,file2,file3
-						$
-								.ajaxFileUpload({
-									url : 'fileUploadAction', //用于文件上传的服务器端请求地址  
-									secureuri : false, //一般设置为false  
-									fileElementId : files, //文件上传空间的id属性  <input type="file" id="file" name="file" />  
-									dataType : 'json', //返回值类型 一般设置为json  
-									success : function(data, status) {
-										var fileNames = data.fileFileName; //返回的文件名 
-										var filePaths = data.filePath; //返回的文件地址 
-										for (var i = 0; i < data.fileFileName.length; i++) {
-											//将上传后的文件 添加到页面中 以进行下载											
-											$("#pic").attr(
-													"src",
-													"${path }attached/"
-															+ filePaths[i]);
-											$("#picPath").val(
-													"attached/" + filePaths[i]);
-										}
-									}
-								})
-					}
-				</script>
+				
+				
+				
 				<li><label style="width: 150px;">&nbsp;</label><img src=""
 					id="pic" width="120px" border="0" /><i></i></li>
 				<input id="picPath" name="picPath" type="hidden" />
