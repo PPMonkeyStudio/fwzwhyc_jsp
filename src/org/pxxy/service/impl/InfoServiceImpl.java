@@ -117,9 +117,25 @@ public class InfoServiceImpl implements InfoService {
 	@Override
 	public PageBean<Info> findInfosByCid(int currentPage, int pageSize, int cid) {
 		infoDao = new InfoDaoImpl();
-		int count = infoDao.getInfoCount(cid); // 求当前类别信息数量
+		/*
+		 * 求当前类别信息数量
+		 */
+		int count = infoDao.getInfoCount(cid); //
 		int totalPage = (int) Math.ceil(count * 1.0 / pageSize);// 求总页数
-		List<Info> list = infoDao.findByCid(currentPage, pageSize, cid); // 求当前页的集合数据
+		/*
+		 * 求当前页的集合数据
+		 */
+		List<Info> list = infoDao.findByCid(currentPage, pageSize, cid);
+		/*
+		 * 将类别放进去
+		 */
+		categoryDao = new CategoryDaoImpl();
+		for (Info thisInfo : list) {
+			thisInfo.setCategory(categoryDao.findCategoryByCid(thisInfo.getCid()));
+		}
+		/*
+		 * 
+		 */
 		PageBean<Info> pb = new PageBean<>();
 		pb.setCount(count);
 		if (currentPage == 0)
@@ -152,9 +168,7 @@ public class InfoServiceImpl implements InfoService {
 		 */
 		categoryDao = new CategoryDaoImpl();
 		for (Info thisInfo : list) {
-
 			thisInfo.setCategory(categoryDao.findCategoryByCid(thisInfo.getCid()));
-
 		}
 		/*
 		 * 装进PageBean

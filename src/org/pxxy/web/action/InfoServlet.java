@@ -78,11 +78,77 @@ public class InfoServlet extends HttpServlet {
 			updateInfo(request, response);
 			break;
 		}
-		default: {
-
+		case "findInfos": {
+			findInfos(request, response);
+			break;
+		}
+		case "findInfosByCid": {
+			findInfosByCid(request, response);
+			break;
+		}
+		case "findInfoByInfoId": {
+			findInfoByInfoId(request, response);
+			break;
 		}
 		}
 
+	}
+
+	/*
+	 * 
+	 */
+	private int pageSize = 10;// 默认每页显示条数
+	/*
+	 * 
+	 */
+
+	private void findInfoByInfoId(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		infoService = new InfoServiceImpl();
+
+		Info info = infoService.findInfoByInfoId(Integer.parseInt(request.getParameter("infoId")));
+		request.setAttribute("info", info);
+		/*
+		 * 
+		 */
+		categoryService = new CategoryServiceImpl();
+		Category category = categoryService.findCategoryByCid(Integer.parseInt(request.getParameter("cid")));
+		request.setAttribute("category", category);
+		/*
+		 * 
+		 */
+		request.getRequestDispatcher("/detail.jsp").forward(request, response);
+
+	}
+
+	/*
+	 * 
+	 */
+	private void findInfosByCid(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		infoService = new InfoServiceImpl();
+		PageBean<Info> pb = infoService.findInfosByCid(Integer.parseInt(request.getParameter("currentPage")), pageSize,
+				Integer.parseInt(request.getParameter("cid")));
+		request.setAttribute("pb", pb);
+		/*
+		 * 
+		 */
+		categoryService = new CategoryServiceImpl();
+		Category category = categoryService.findCategoryByCid(Integer.parseInt(request.getParameter("cid")));
+		request.setAttribute("category", category);
+		/*
+		 * 
+		 */
+		request.getRequestDispatcher("/infolist.jsp").forward(request, response);
+	}
+
+	/*
+	 * 获取图片
+	 */
+
+	private void findInfos(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("findInfos");
 	}
 
 	private void updateInfo(HttpServletRequest request, HttpServletResponse response)
@@ -112,17 +178,6 @@ public class InfoServlet extends HttpServlet {
 
 		request.getRequestDispatcher("/admin/info/list.jsp").forward(request, response);
 	}
-
-	/*
-	 * 
-	 */
-	private int pageSize = 10;// 默认每页显示条数
-	/*
-	 * 
-	 */
-	/*
-	 * 获取图片
-	 */
 
 	private void getImg(HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
 		String img = request.getParameter("imgName");

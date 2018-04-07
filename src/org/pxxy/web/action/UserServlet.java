@@ -1,6 +1,7 @@
 package org.pxxy.web.action;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -35,10 +36,31 @@ public class UserServlet extends HttpServlet {
 			login(request, response);
 			break;
 		}
+		case "logout": {
+			logout(request, response);
+			break;
+		}
 		default: {
 
 		}
 		}
+
+	}
+
+	private void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		session = request.getSession();
+
+		session.removeAttribute("userName");
+
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		out.print("<script language=javascript>");
+		out.print("top.location.href='" + request.getContextPath() + "/index.jsp'");
+		out.print("</script>");
 
 	}
 

@@ -2,6 +2,15 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%
+	request.setCharacterEncoding("UTF-8");
+%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	request.setAttribute("path", basePath);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +31,8 @@
 
 	<!--头部-->
 	<%@include file="header.jsp"%>
-
+	<c:import var="data" url="/info?option=findInfos" />
+	<%-- <s:action name="findInfos" executeResult="false" namespace="/"></s:action> --%>
 	<!--幻灯片-->
 	<div class="slide-container">
 		<section id="dg-container" class="dg-container">
@@ -39,7 +49,7 @@
 
 	<!--内容-->
 	<div class="container">
-		<s:action name="findInfos" executeResult="false" namespace="/"></s:action>
+
 		<!--非遗资讯-->
 		<div class="item col-12">
 			<div class="item-header">

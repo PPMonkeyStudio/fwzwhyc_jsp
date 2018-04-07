@@ -54,10 +54,11 @@ public class CategoryServlet extends HttpServlet {
 			updateCategory(request, response);
 			break;
 		}
-
-		default: {
-
+		case "findNaviCategory": {
+			findNaviCategory(request, response);
+			break;
 		}
+
 		}
 
 	}
@@ -65,6 +66,12 @@ public class CategoryServlet extends HttpServlet {
 	/*
 	 * 
 	 */
+
+	private void findNaviCategory(HttpServletRequest request, HttpServletResponse response) {
+		categoryService = new CategoryServiceImpl();
+		List<Category> categoryList = categoryService.findNaviCategory();
+		request.setAttribute("categoryList", categoryList);
+	}
 
 	/*
 	 * 后台查询信息类别数据

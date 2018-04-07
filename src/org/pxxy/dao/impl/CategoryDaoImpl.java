@@ -171,7 +171,37 @@ public class CategoryDaoImpl implements CategoryDao {
 
 	@Override
 	public List<Category> findNaviCategory() {
-		return null;
+
+		try {
+			connection = ConnectionMySQL.getCon();
+
+			String sql = "select *  from category  order by cid asc";
+
+			preparedStmt = connection.prepareStatement(sql);
+
+			resultSet = preparedStmt.executeQuery();
+
+			List<Category> CategoryList = new ArrayList<Category>();
+
+			Category category = null;
+
+			while (resultSet.next()) {
+				category = new Category();
+				category.setCid(resultSet.getInt("cid"));
+				category.setCname(resultSet.getString("cname"));
+				category.setPid(resultSet.getInt("pid"));
+				/*
+				 * 
+				 */
+				CategoryList.add(category);
+			}
+
+			return CategoryList;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

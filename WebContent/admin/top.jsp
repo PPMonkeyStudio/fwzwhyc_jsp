@@ -53,7 +53,7 @@
 	<script type="text/javascript">
 		function logout() {
 			if (window.confirm("您确定要退出吗？")) {
-				location.href = "${path }logout.action";
+				location.href = "${path}user?option=logout";
 			} else {
 				return false;
 			}

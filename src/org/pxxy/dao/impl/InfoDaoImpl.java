@@ -181,12 +181,67 @@ public class InfoDaoImpl implements InfoDao {
 
 	@Override
 	public int getInfoCount(Integer cid) {
-		return 0;
+
+		try {
+			connection = ConnectionMySQL.getCon();
+
+			String sql = "select count(*) count from info where cid = '" + cid + "' ";
+
+			preparedStmt = connection.prepareStatement(sql);
+
+			resultSet = preparedStmt.executeQuery();
+
+			resultSet.next();
+
+			return resultSet.getInt("count");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
 	}
 
 	@Override
 	public List<Info> findByCid(int currentPage, int pageSize, Integer cid) {
-		return null;
+		try {
+			connection = ConnectionMySQL.getCon();
+
+			String sql = "select *  from info where cid = '" + cid + "' order by publishTime desc limit "
+					+ Integer.toString(pageSize) + " offset " + Integer.toString((currentPage - 1) * 10);
+
+			preparedStmt = connection.prepareStatement(sql);
+
+			resultSet = preparedStmt.executeQuery();
+
+			List<Info> infoList = new ArrayList<Info>();
+
+			Info info = null;
+
+			while (resultSet.next()) {
+				info = new Info();
+				info.setInfoId(resultSet.getInt("infoId"));
+				info.setAuthor(resultSet.getString("author"));
+				info.setContent(resultSet.getString("content"));
+				info.setContentAbstract(resultSet.getString("contentAbstract"));
+				info.setContentTitle(resultSet.getString("contentTitle"));
+				info.setPaiXu(resultSet.getInt("paiXu"));
+				info.setPicPath(resultSet.getString("picPath"));
+				info.setPublishStatus(resultSet.getString("publishStatus"));
+				info.setPublishTime(resultSet.getString("publishTime"));
+				info.setTitle(resultSet.getString("title"));
+				info.setCid(resultSet.getInt("cid"));
+				/*
+				 * 
+				 */
+				infoList.add(info);
+			}
+
+			return infoList;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override

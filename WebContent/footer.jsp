@@ -4,7 +4,9 @@
 <div class="footer">
 	<div class="footer-r">
 		<p>江西省高校人文重点研究基地非物质文化遗产研究中心维护</p>
-		<p>萍乡学院版权所有 @copy 2017</p>
+		<p>
+			萍乡学院版权所有 <a href="/end_infopub/login.jsp">@</a>copy 2017
+		</p>
 	</div>
 	<ul class="footer-l">
 		<li><img src="./img/l01.jpg" /></li>
