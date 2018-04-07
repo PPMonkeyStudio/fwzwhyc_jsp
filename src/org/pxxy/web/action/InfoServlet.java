@@ -90,6 +90,7 @@ public class InfoServlet extends HttpServlet {
 			findInfoByInfoId(request, response);
 			break;
 		}
+
 		}
 
 	}
@@ -148,7 +149,40 @@ public class InfoServlet extends HttpServlet {
 	 */
 
 	private void findInfos(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("findInfos");
+		infoService = new InfoServiceImpl();
+		/*
+		 * 非遗资讯
+		 */
+		List<Info> fyzxInfos = infoService.findFyzxInfos();
+		request.setAttribute("fyzxInfos", fyzxInfos);
+		/*
+		 * 学术交流
+		 */
+		List<Info> xsjlInfos = infoService.findXsjlInfos();
+		request.setAttribute("xsjlInfos", xsjlInfos);
+		/*
+		 * 
+		 */
+		List<Info> fyjtInfos = infoService.findFyjtInfos();
+		request.setAttribute("fyjtInfos", fyjtInfos);
+		/*
+		 * 
+		 */
+		List<Info> fyjjInfos = infoService.findFyjjInfos();
+		request.setAttribute("fyjjInfos", fyjjInfos);
+		/*
+		 * 
+		 */
+		List<Info> hzptInfos = infoService.findHzptInfos();
+		request.setAttribute("hzptInfos", hzptInfos);
+		/*
+		 * 
+		 */
+		List<Info> fycrInfos = infoService.findFycrInfos();
+		request.setAttribute("fycrInfos", fycrInfos);
+		/*
+		 * 
+		 */
 	}
 
 	private void updateInfo(HttpServletRequest request, HttpServletResponse response)

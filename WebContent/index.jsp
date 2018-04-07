@@ -54,9 +54,8 @@
 		<div class="item col-12">
 			<div class="item-header">
 				<div class="item-header-r">
-					<a
-						href="${pageContext.request.contextPath}/findInfosByCid.action?cid=101"
-						class="icon-more" title="更多"></a>
+					<a href="${Path}/findInfosByCid&cid=101" class="icon-more"
+						title="更多"></a>
 				</div>
 				<div class="item-header-l">
 					<strong>非遗资讯</strong><span>INFORMATION</span>
@@ -67,27 +66,21 @@
 				<div class="book-scroll">
 					<div class="book-scroll-wrap">
 						<ul>
-							<s:iterator value="#request.fyzxInfos" id="fyzxInfo">
+							<c:forEach items="${fyzxInfos}" var="info">
 								<li class="open"><a href="javascript:void(0);" class="pic">
-										<img src="<s:property value='#fyzxInfo.picPath' />" alt="">
-										<div>
-											<s:date name="#fyzxInfo.publishTime" format="yyyy年MM月dd日" />
-										</div>
+										<img src="${path}info?option=getImg&imgName=${info.picPath}"
+										alt="">
+										<div>${info.publishTime}</div>
 								</a>
 									<div class="detail">
-										<h3>
-											<s:property value="#fyzxInfo.title" />
-										</h3>
-										<p>
-											<s:property value="#fyzxInfo.contentAbstract" />
-											…
-										</p>
+										<h3>${info.title}</h3>
+										<p>${info.contentAbstract}…</p>
 										<p>
 											<a target="blank"
-												href="${pageContext.request.contextPath}/findInfoByInfoId.action?infoId=<s:property value='#fyzxInfo.infoId' />">详细内容</a>
+												href="${Path}info?option=findInfoByInfoId&infoId=${info.infoId}' />">详细内容</a>
 										</p>
 									</div></li>
-							</s:iterator>
+							</c:forEach>
 						</ul>
 					</div>
 					<a href="javascript:void(0)" class="btn-prev icon-arrowl"></a> <a
@@ -95,136 +88,128 @@
 				</div>
 			</div>
 		</div>
-
-		<!--学术交流-->
-		<div class="item col-6 col-r">
-			<div class="item-header">
-				<div class="item-header-r">
-					<a
-						href="${pageContext.request.contextPath}/findInfosByCid.action?cid=102"
-						class="icon-more" title="更多"></a>
+		<div style="">
+			<!--学术交流-->
+			<div class="item col-6 col-r">
+				<div class="item-header">
+					<div class="item-header-r">
+						<a href="${Path}info?option=findInfosByCid&cid=102"
+							class="icon-more" title="更多"></a>
+					</div>
+					<div class="item-header-l">
+						<strong>学术交流</strong><span>COMMUNICATION</span>
+					</div>
 				</div>
-				<div class="item-header-l">
-					<strong>学术交流</strong><span>COMMUNICATION</span>
+				<div class="item-body item-img-list">
+					<div class="item-img">
+						<c:set var="index" value="1" />
+						<c:forEach items="${xsjlInfos}" var="info">
+							<c:if test="${info.picPath != NULL && info.picPath != ''}">
+								<c:if test="${index==1}">
+									<c:set var="index" value="2" />
+									<a target="blank"
+										href="${Path}/findInfoByInfoId&infoId=${xsjlInfo.infoId}"><img
+										src="${path}info?option=getImg&imgName=${info.picPath}" /></a>
+								${memeber.nickName}
+							</c:if>
+							</c:if>
+						</c:forEach>
+					</div>
+					<ul>
+						<c:forEach items="${xsjlInfos}" var="info">
+							<li><a target="blank"
+								href="${Path}info?option=findInfoByInfoId&infoId=${info.infoId}">${info.title}</a></li>
+						</c:forEach>
+					</ul>
 				</div>
 			</div>
-			<div class="item-body item-img-list">
-				<div class="item-img">
-					<s:set name="index" value="1" />
-					<s:iterator value="#request.xsjlInfos" var="xsjlInfo" id="xsjlInfo"
-						status="status">
-						<s:if
-							test='%{#xsjlInfo.picPath != NULL && #xsjlInfo.picPath != "" }'>
-							<s:if test="#index==1">
-								<s:set name="index" value="2" />
-								<a target="blank"
-									href="${pageContext.request.contextPath}/findInfoByInfoId.action?infoId=<s:property value="#xsjlInfo.infoId" />"><img
-									src="<s:property value="#xsjlInfo.picPath" />" /></a>
-								<s:property value="#memeber.nickName" />
-							</s:if>
-						</s:if>
-					</s:iterator>
+
+			<!--非遗聚焦-->
+			<div class="item col-6 col-l">
+				<div class="item-header">
+					<div class="item-header-r">
+						<a href="${Path}info?option=findInfosByCid&cid=103"
+							class="icon-more" title="更多"></a>
+					</div>
+					<div class="item-header-l">
+						<strong>非遗聚焦</strong><span>FOCUS</span>
+					</div>
 				</div>
-				<ul>
-					<s:iterator value="#request.xsjlInfos" id="xsjlInfo">
-						<li><a target="blank"
-							href="${pageContext.request.contextPath}/findInfoByInfoId.action?infoId=<s:property value="#xsjlInfo.infoId" />"><s:property
-									value="#xsjlInfo.title" /></a></li>
-					</s:iterator>
-				</ul>
+				<div class="item-body item-img-list">
+					<ul>
+						<c:forEach items="${fyjjInfos}" var="info">
+							<li><span>${info.publishTime}</span><a target="blank"
+								href="${Path}info?option=findInfoByInfoId&infoId=${info.infoId}">${info.title}</a></li>
+						</c:forEach>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		<div style="float: left;">
+			<!--非遗讲坛-->
+			<div class="item col-4 col-r">
+				<div class="item-header">
+					<div class="item-header-r">
+						<a href="${Path}info?option=findInfosByCid&cid=104"
+							class="icon-more" title="更多"></a>
+					</div>
+					<div class="item-header-l">
+						<strong>非遗讲坛</strong><span>PLATFORM</span>
+					</div>
+				</div>
+				<div class="item-body item-img-list">
+					<c:forEach items="${fyjtInfos}" var="info">
+						<a target="blank"
+							href="${Path}info?option=findInfoByInfoId&infoId=${info.infoId}">
+							<img src="${path}info?option=getImg&imgName=${info.picPath}" />
+						</a>
+					</c:forEach>
+				</div>
+			</div>
+
+			<!--合作平台-->
+			<div class="item col-4 col-rl">
+				<div class="item-header">
+					<div class="item-header-r">
+						<a href="${Path}info?option=findInfosByCid&cid=105"
+							class="icon-more" title="更多"></a>
+					</div>
+					<div class="item-header-l">
+						<strong>合作平台</strong><span>COOPERATION</span>
+					</div>
+				</div>
+				<div class="item-body item-img-list">
+					<c:forEach items="${hzptInfos}" var="info">
+						<a target="blank"
+							href="${Path}info?option=findInfoByInfoId&infoId=${info.infoId}">
+							<img src="${path}info?option=getImg&imgName=${info.picPath}" />
+						</a>
+					</c:forEach>
+				</div>
+			</div>
+
+			<!--非遗传人-->
+			<div class="item col-4 col-l">
+				<div class="item-header">
+					<div class="item-header-r">
+						<a href="${Path}info?option=findInfosByCid&cid=106"
+							class="icon-more" title="更多"></a>
+					</div>
+					<div class="item-header-l">
+						<strong>非遗传人</strong><span>INHERITOR</span>
+					</div>
+				</div>
+				<div class="item-body item-img-list">
+					<c:forEach items="${fycrInfos}" var="info">
+						<a target="blank"
+							href="${Path}info?option=findInfoByInfoId&infoId=${info.infoId}">
+							<img src="${path}info?option=getImg&imgName=${info.picPath}" />
+						</a>
+					</c:forEach>
+				</div>
 			</div>
 		</div>
-
-		<!--非遗聚焦-->
-		<div class="item col-6 col-l">
-			<div class="item-header">
-				<div class="item-header-r">
-					<a
-						href="${pageContext.request.contextPath}/findInfosByCid.action?cid=103"
-						class="icon-more" title="更多"></a>
-				</div>
-				<div class="item-header-l">
-					<strong>非遗聚焦</strong><span>FOCUS</span>
-				</div>
-			</div>
-			<div class="item-body item-img-list">
-				<ul>
-					<s:iterator value="#request.fyjjInfos" id="fyjjInfo">
-						<li><span><s:date name="#fyjjInfo.publishTime"
-									format="yyyy/MM/dd" /> </span><a target="blank"
-							href="${pageContext.request.contextPath}/findInfoByInfoId.action?infoId=<s:property value="#fyjjInfo.infoId" />"><s:property
-									value="#fyjjInfo.title" /></a></li>
-					</s:iterator>
-				</ul>
-			</div>
-		</div>
-
-		<!--非遗讲坛-->
-		<div class="item col-4 col-r">
-			<div class="item-header">
-				<div class="item-header-r">
-					<a
-						href="${pageContext.request.contextPath}/findInfosByCid.action?cid=104"
-						class="icon-more" title="更多"></a>
-				</div>
-				<div class="item-header-l">
-					<strong>非遗讲坛</strong><span>PLATFORM</span>
-				</div>
-			</div>
-			<div class="item-body item-img-list">
-				<s:iterator value="#request.fyjtInfos" id="fyjtInfo">
-					<a target="blank"
-						href="${pageContext.request.contextPath}/findInfoByInfoId.action?infoId=<s:property value="#fyjtInfo.infoId" />">
-						<img src="<s:property value="#fyjtInfo.picPath" />" />
-					</a>
-				</s:iterator>
-			</div>
-		</div>
-
-		<!--合作平台-->
-		<div class="item col-4 col-rl">
-			<div class="item-header">
-				<div class="item-header-r">
-					<a
-						href="${pageContext.request.contextPath}/findInfosByCid.action?cid=105"
-						class="icon-more" title="更多"></a>
-				</div>
-				<div class="item-header-l">
-					<strong>合作平台</strong><span>COOPERATION</span>
-				</div>
-			</div>
-			<div class="item-body item-img-list">
-				<s:iterator value="#request.hzptInfos" id="hzptInfo">
-					<a target="blank"
-						href="${pageContext.request.contextPath}/findInfoByInfoId.action?infoId=<s:property value="#hzptInfo.infoId" />">
-						<img src="<s:property value="#hzptInfo.picPath" />" />
-					</a>
-				</s:iterator>
-			</div>
-		</div>
-
-		<!--非遗传人-->
-		<div class="item col-4 col-l">
-			<div class="item-header">
-				<div class="item-header-r">
-					<a
-						href="${pageContext.request.contextPath}/findInfosByCid.action?cid=106"
-						class="icon-more" title="更多"></a>
-				</div>
-				<div class="item-header-l">
-					<strong>非遗传人</strong><span>INHERITOR</span>
-				</div>
-			</div>
-			<div class="item-body item-img-list">
-				<s:iterator value="#request.fycrInfos" id="fycrInfo">
-					<a target="blank"
-						href="${pageContext.request.contextPath}/findInfoByInfoId.action?infoId=<s:property value="#fycrInfo.infoId" />">
-						<img src="<s:property value="#fycrInfo.picPath" />" />
-					</a>
-				</s:iterator>
-			</div>
-		</div>
-
 		<!--其他-->
 		<div class="item col-12 hide">
 			<ul class="item-other">

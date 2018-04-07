@@ -136,12 +136,87 @@ public class InfoDaoImpl implements InfoDao {
 
 	@Override
 	public List<Info> findFyzxInfos() {
-		return null;
+
+		try {
+			connection = ConnectionMySQL.getCon();
+
+			String sql = "select *  from info where cid = '101' order by publishTime desc ";
+
+			preparedStmt = connection.prepareStatement(sql);
+
+			resultSet = preparedStmt.executeQuery();
+
+			List<Info> infoList = new ArrayList<Info>();
+
+			Info info = null;
+
+			while (resultSet.next()) {
+				info = new Info();
+				info.setInfoId(resultSet.getInt("infoId"));
+				info.setAuthor(resultSet.getString("author"));
+				info.setContent(resultSet.getString("content"));
+				info.setContentAbstract(resultSet.getString("contentAbstract"));
+				info.setContentTitle(resultSet.getString("contentTitle"));
+				info.setPaiXu(resultSet.getInt("paiXu"));
+				info.setPicPath(resultSet.getString("picPath"));
+				info.setPublishStatus(resultSet.getString("publishStatus"));
+				info.setPublishTime(resultSet.getString("publishTime"));
+				info.setTitle(resultSet.getString("title"));
+				info.setCid(resultSet.getInt("cid"));
+				/*
+				 * 
+				 */
+				infoList.add(info);
+			}
+
+			return infoList;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public List<Info> findXsjlInfos() {
-		return null;
+		try {
+			connection = ConnectionMySQL.getCon();
+
+			String sql = "select *  from info where cid = '102' order by publishTime desc ";
+
+			preparedStmt = connection.prepareStatement(sql);
+
+			resultSet = preparedStmt.executeQuery();
+
+			List<Info> infoList = new ArrayList<Info>();
+
+			Info info = null;
+
+			while (resultSet.next()) {
+				info = new Info();
+				info.setInfoId(resultSet.getInt("infoId"));
+				info.setAuthor(resultSet.getString("author"));
+				info.setContent(resultSet.getString("content"));
+				info.setContentAbstract(resultSet.getString("contentAbstract"));
+				info.setContentTitle(resultSet.getString("contentTitle"));
+				info.setPaiXu(resultSet.getInt("paiXu"));
+				info.setPicPath(resultSet.getString("picPath"));
+				info.setPublishStatus(resultSet.getString("publishStatus"));
+				info.setPublishTime(resultSet.getString("publishTime"));
+				info.setTitle(resultSet.getString("title"));
+				info.setCid(resultSet.getInt("cid"));
+				/*
+				 * 
+				 */
+				infoList.add(info);
+			}
+
+			return infoList;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
@@ -151,22 +226,171 @@ public class InfoDaoImpl implements InfoDao {
 
 	@Override
 	public List<Info> findFyjjInfos() {
-		return null;
+		try {
+			connection = ConnectionMySQL.getCon();
+
+			String sql = "select *  from info where cid = '103' order by publishTime desc ";
+
+			preparedStmt = connection.prepareStatement(sql);
+
+			resultSet = preparedStmt.executeQuery();
+
+			List<Info> infoList = new ArrayList<Info>();
+
+			Info info = null;
+
+			while (resultSet.next()) {
+				info = new Info();
+				info.setInfoId(resultSet.getInt("infoId"));
+				info.setAuthor(resultSet.getString("author"));
+				info.setContent(resultSet.getString("content"));
+				info.setContentAbstract(resultSet.getString("contentAbstract"));
+				info.setContentTitle(resultSet.getString("contentTitle"));
+				info.setPaiXu(resultSet.getInt("paiXu"));
+				info.setPicPath(resultSet.getString("picPath"));
+				info.setPublishStatus(resultSet.getString("publishStatus"));
+				info.setPublishTime(resultSet.getString("publishTime"));
+				info.setTitle(resultSet.getString("title"));
+				info.setCid(resultSet.getInt("cid"));
+				/*
+				 * 
+				 */
+				infoList.add(info);
+			}
+
+			return infoList;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public List<Info> findFyjtInfos() {
-		return null;
+
+		try {
+			connection = ConnectionMySQL.getCon();
+
+			String sql = "select *  from info where cid = '104' order by publishTime desc ";
+
+			preparedStmt = connection.prepareStatement(sql);
+
+			resultSet = preparedStmt.executeQuery();
+
+			List<Info> infoList = new ArrayList<Info>();
+
+			Info info = null;
+
+			while (resultSet.next()) {
+				info = new Info();
+				info.setInfoId(resultSet.getInt("infoId"));
+				info.setAuthor(resultSet.getString("author"));
+				info.setContent(resultSet.getString("content"));
+				info.setContentAbstract(resultSet.getString("contentAbstract"));
+				info.setContentTitle(resultSet.getString("contentTitle"));
+				info.setPaiXu(resultSet.getInt("paiXu"));
+				info.setPicPath(resultSet.getString("picPath"));
+				info.setPublishStatus(resultSet.getString("publishStatus"));
+				info.setPublishTime(resultSet.getString("publishTime"));
+				info.setTitle(resultSet.getString("title"));
+				info.setCid(resultSet.getInt("cid"));
+				/*
+				 * 
+				 */
+				infoList.add(info);
+			}
+
+			return infoList;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public List<Info> findHzptInfos() {
-		return null;
+		try {
+			connection = ConnectionMySQL.getCon();
+
+			String sql = "select *  from info where cid = '105' order by publishTime desc ";
+
+			preparedStmt = connection.prepareStatement(sql);
+
+			resultSet = preparedStmt.executeQuery();
+
+			List<Info> infoList = new ArrayList<Info>();
+
+			Info info = null;
+
+			while (resultSet.next()) {
+				info = new Info();
+				info.setInfoId(resultSet.getInt("infoId"));
+				info.setAuthor(resultSet.getString("author"));
+				info.setContent(resultSet.getString("content"));
+				info.setContentAbstract(resultSet.getString("contentAbstract"));
+				info.setContentTitle(resultSet.getString("contentTitle"));
+				info.setPaiXu(resultSet.getInt("paiXu"));
+				info.setPicPath(resultSet.getString("picPath"));
+				info.setPublishStatus(resultSet.getString("publishStatus"));
+				info.setPublishTime(resultSet.getString("publishTime"));
+				info.setTitle(resultSet.getString("title"));
+				info.setCid(resultSet.getInt("cid"));
+				/*
+				 * 
+				 */
+				infoList.add(info);
+			}
+
+			return infoList;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public List<Info> findFycrInfos() {
-		return null;
+		try {
+			connection = ConnectionMySQL.getCon();
+
+			String sql = "select *  from info where cid = '106' order by publishTime desc ";
+
+			preparedStmt = connection.prepareStatement(sql);
+
+			resultSet = preparedStmt.executeQuery();
+
+			List<Info> infoList = new ArrayList<Info>();
+
+			Info info = null;
+
+			while (resultSet.next()) {
+				info = new Info();
+				info.setInfoId(resultSet.getInt("infoId"));
+				info.setAuthor(resultSet.getString("author"));
+				info.setContent(resultSet.getString("content"));
+				info.setContentAbstract(resultSet.getString("contentAbstract"));
+				info.setContentTitle(resultSet.getString("contentTitle"));
+				info.setPaiXu(resultSet.getInt("paiXu"));
+				info.setPicPath(resultSet.getString("picPath"));
+				info.setPublishStatus(resultSet.getString("publishStatus"));
+				info.setPublishTime(resultSet.getString("publishTime"));
+				info.setTitle(resultSet.getString("title"));
+				info.setCid(resultSet.getInt("cid"));
+				/*
+				 * 
+				 */
+				infoList.add(info);
+			}
+
+			return infoList;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
