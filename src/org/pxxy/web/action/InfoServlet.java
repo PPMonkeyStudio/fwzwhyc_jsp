@@ -1,5 +1,7 @@
 package org.pxxy.web.action;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,10 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.pxxy.domain.Category;
 import org.pxxy.domain.Info;
 import org.pxxy.domain.PageBean;
 import org.pxxy.service.CategoryService;
 import org.pxxy.service.InfoService;
+import org.pxxy.service.impl.CategoryServiceImpl;
 import org.pxxy.service.impl.InfoServiceImpl;
 import org.pxxy.utils.Time;
 import org.pxxy.utils.UUIDUtils;
@@ -58,12 +62,55 @@ public class InfoServlet extends HttpServlet {
 			delInfo(request, response);
 			break;
 		}
-
+		case "toAddInfoPage": {
+			toAddInfoPage(request, response);
+			break;
+		}
+		case "editInfo": {
+			editInfo(request, response);
+			break;
+		}
+		case "getImg": {
+			getImg(request, response);
+			break;
+		}
+		case "updateInfo": {
+			updateInfo(request, response);
+			break;
+		}
 		default: {
 
 		}
 		}
 
+	}
+
+	private void updateInfo(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		infoService = new InfoServiceImpl();
+		/*
+		 * 
+		 */
+		Info info = new Info();
+		info.setInfoId(Integer.parseInt(request.getParameter("infoId")));
+		info.setAuthor(request.getParameter("author"));
+		info.setTitle(request.getParameter("title"));
+		info.setContentTitle(request.getParameter("contentTitle"));
+		info.setContentAbstract(request.getParameter("contentAbstract"));
+		info.setContent(request.getParameter("content"));
+		info.setPublishStatus(request.getParameter("publishStatus"));
+		info.setPaiXu(Integer.parseInt(request.getParameter("paiXu")));
+		info.setCid(Integer.parseInt(request.getParameter("cid")));
+
+		infoService.updateInfo(info);
+		/*
+		 * 
+		 */
+		PageBean<Info> pb = infoService.findInfosByPage(1, pageSize, "");
+
+		request.setAttribute("pb", pb);
+
+		request.getRequestDispatcher("/admin/info/list.jsp").forward(request, response);
 	}
 
 	/*
@@ -73,7 +120,87 @@ public class InfoServlet extends HttpServlet {
 	/*
 	 * 
 	 */
+	/*
+	 * 获取图片
+	 */
 
+	private void getImg(HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
+		String img = request.getParameter("imgName");
+		FileInputStream fileInputStream = null;
+
+		try {
+			fileInputStream = new FileInputStream("C:/infopub/" + img);
+		} catch (FileNotFoundException e) {
+			try {
+				fileInputStream = new FileInputStream("C:/infopub/NotFound.jpg");
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+
+		}
+
+		try {
+			int i;
+
+			i = fileInputStream.available();
+
+			byte[] buff = new byte[i];
+			fileInputStream.read(buff);
+			fileInputStream.close();
+			response.setContentType("image/*");
+			OutputStream outputStream = response.getOutputStream();
+			outputStream.write(buff);
+			outputStream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/*
+	 * 对新闻进行编辑
+	 */
+	private void editInfo(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		infoService = new InfoServiceImpl();
+		categoryService = new CategoryServiceImpl();
+		/*
+		 * 
+		 */
+		Info info = infoService.findInfoByInfoId(Integer.parseInt(request.getParameter("infoId")));
+
+		request.setAttribute("info", info);
+		/*
+		 * 
+		 */
+
+		List<Category> categorylist = categoryService.findAllCategory();
+
+		request.setAttribute("categorylist", categorylist);
+
+		/*
+		 * 
+		 */
+
+		request.getRequestDispatcher("/admin/info/edit.jsp").forward(request, response);
+	}
+
+	private void toAddInfoPage(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		categoryService = new CategoryServiceImpl();
+
+		List<Category> list = categoryService.findAllCategory();
+
+		request.setAttribute("list", list);
+
+		request.getRequestDispatcher("/admin/info/add.jsp").forward(request, response);
+	}
+
+	/*
+	 * 删除一条新闻
+	 */
 	private void delInfo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		infoService = new InfoServiceImpl();
@@ -92,6 +219,9 @@ public class InfoServlet extends HttpServlet {
 
 	}
 
+	/*
+	 * 分页查询新闻
+	 */
 	public void findInfosByPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 

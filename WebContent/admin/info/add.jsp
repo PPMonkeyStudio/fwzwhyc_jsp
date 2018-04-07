@@ -33,16 +33,16 @@
 		<div class="formtitle">
 			<span>添加信息</span>
 		</div>
-		<form action="${path}info?option=addInfo" name="ff" method="post" enctype="multipart/form-data"
-			onsubmit="return checkValue()">
+		<form action="${path}info?option=addInfo" name="ff" method="post"
+			enctype="multipart/form-data" onsubmit="return checkValue()">
 
 			<ul class="forminfo">
 
 				<li><label style="width: 150px;">标题（<font
 						style="color: Red; font-weight: bolder;">*</font>）：
-				</label><input id="title" name="title" type="text" class="dfinput" /><i></i></li>
+				</label><input id="title" name="title" type="text" class="dfinput" /></li>
 				<li><label style="width: 150px;">副标题：</label><input
-					id="contentTitle" name="contentTitle" type="text" class="dfinput" /><i></i></li>
+					id="contentTitle" name="contentTitle" type="text" class="dfinput" /></li>
 				<li><label style="width: 150px;">信息类别（<font
 						style="color: Red; font-weight: bolder;">*</font>）：
 				</label> <select name="cid" id="cid" class="dfinput">
@@ -50,25 +50,25 @@
 						<c:forEach items="${list}" var="category">
 							<option value="${category.cid }">${category.cname }</option>
 						</c:forEach>
-				</select> <i></i></li>
+				</select></li>
 				<li><label style="width: 150px;">作者（来源）：</label><input
-					id="author" name="author" type="text" class="dfinput" /><i></i></li>
+					id="author" name="author" type="text" class="dfinput" /></li>
 				<li><label style="width: 150px;">内容摘要：</label> <textarea
 						id="contentAbstract" name="contentAbstract" cols="100" rows="4"
-						style="width: 800px; height: 100px;" class="dfinput"></textarea><i></i></li>
+						style="width: 800px; height: 100px;" class="dfinput"></textarea></li>
 				<li><label style="width: 150px;">信息内容（<font
 						style="color: Red; font-weight: bolder;">*</font>）：
 				</label> <textarea id="content" name="content" cols="100" rows="8"
-						style="width: 800px; height: 400px;" class="dfinput" /> </textarea><i></i></li>
+						style="width: 800px; height: 400px;" class="dfinput" /> </textarea></li>
 				<li><label style="width: 150px;">排序：</label><input id="paiXu"
-					name="paiXu" type="text" value="10000" class="dfinput" /><i></i></li>
+					name="paiXu" type="text" value="10000" class="dfinput" /></li>
 				<li><label style="width: 150px;">图片：</label><input id="file1"
-					name="file" type="file" onchange="fileUpload();" /><i></i></li>
+					name="file" type="file" onchange="fileUpload();" /></li>
 				<li><label style="width: 150px;">是否发布：</label><select
 					id="publishStatus" name="publishStatus" class="dfinput">
 						<option value="0">否</option>
 						<option value="1">是</option>
-				</select><i></i></li>
+				</select></li>
 				<li><label>&nbsp;</label><input name="" type="submit"
 					class="btn" value="确认添加" /> &nbsp;&nbsp;<input name=""
 					type="button" onclick="goback();" class="btn" value="返回列表" /></li>

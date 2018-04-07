@@ -3,7 +3,9 @@ package org.pxxy.service.impl;
 import java.io.File;
 import java.util.List;
 
+import org.pxxy.dao.CategoryDao;
 import org.pxxy.dao.InfoDao;
+import org.pxxy.dao.impl.CategoryDaoImpl;
 import org.pxxy.dao.impl.InfoDaoImpl;
 import org.pxxy.domain.Info;
 import org.pxxy.domain.PageBean;
@@ -12,6 +14,7 @@ import org.pxxy.service.InfoService;
 public class InfoServiceImpl implements InfoService {
 
 	private InfoDao infoDao;
+	private CategoryDao categoryDao;
 
 	@Override
 	public List<Info> findAllInfo() {
@@ -52,6 +55,7 @@ public class InfoServiceImpl implements InfoService {
 	@Override
 	public void updateInfo(Info info) {
 		infoDao = new InfoDaoImpl();
+
 		infoDao.updateInfo(info);
 
 	}
@@ -141,7 +145,20 @@ public class InfoServiceImpl implements InfoService {
 		/*
 		 * 求当前页的集合数据
 		 */
-		List<Info> list = infoDao.findByPage(currentPage, pageSize, keywords); //
+		List<Info> list = infoDao.findByPage(currentPage, pageSize, keywords);
+
+		/*
+		 * 将类别放进去
+		 */
+		categoryDao = new CategoryDaoImpl();
+		for (Info thisInfo : list) {
+
+			thisInfo.setCategory(categoryDao.findCategoryByCid(thisInfo.getCid()));
+
+		}
+		/*
+		 * 装进PageBean
+		 */
 		PageBean<Info> pb = new PageBean<Info>();
 		pb.setCount(count);
 		pb.setCurrentPage(currentPage);

@@ -78,8 +78,16 @@ public class InfoDaoImpl implements InfoDao {
 				info = new Info();
 
 				info.setInfoId(resultSet.getInt("infoId"));
-
+				info.setAuthor(resultSet.getString("author"));
+				info.setTitle(resultSet.getString("title"));
+				info.setContentTitle(resultSet.getString("contentTitle"));
+				info.setContentAbstract(resultSet.getString("contentAbstract"));
+				info.setContent(resultSet.getString("content"));
 				info.setPicPath(resultSet.getString("picPath"));
+				info.setPublishTime(resultSet.getString("publishTime"));
+				info.setPublishStatus(resultSet.getString("publishStatus"));
+				info.setPaiXu(resultSet.getInt("paiXu"));
+				info.setCid(resultSet.getInt("cid"));
 
 				return info;
 
@@ -102,6 +110,23 @@ public class InfoDaoImpl implements InfoDao {
 	@Override
 	public void updateInfo(Info info) {
 
+		try {
+
+			connection = ConnectionMySQL.getCon();
+
+			String sql = "update info set author='" + info.getAuthor() + "' , title='" + info.getTitle()
+					+ "' , contentTitle='" + info.getContentTitle() + "' , contentAbstract='"
+					+ info.getContentAbstract() + "' , content='" + info.getContent() + "' , publishStatus='"
+					+ info.getPublishStatus() + "' , paiXu='" + info.getPaiXu() + "' , cid='" + info.getCid()
+					+ "'  where infoId ='" + info.getInfoId() + "'";
+
+			stmt = connection.createStatement();
+
+			stmt.executeUpdate(sql);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -172,8 +197,6 @@ public class InfoDaoImpl implements InfoDao {
 
 			String sql = "select count(*) count from info where title like '%" + keywords + "%' ";
 
-			System.out.println(sql);
-
 			preparedStmt = connection.prepareStatement(sql);
 
 			resultSet = preparedStmt.executeQuery();
@@ -193,10 +216,8 @@ public class InfoDaoImpl implements InfoDao {
 		try {
 			connection = ConnectionMySQL.getCon();
 
-			String sql = "select *  from info where title like '%" + keywords + "%' limit " + Integer.toString(pageSize)
-					+ " offset " + Integer.toString((currentPage - 1) * 10);
-
-			System.out.println(sql);
+			String sql = "select *  from info where title like '%" + keywords + "%' order by publishTime desc limit "
+					+ Integer.toString(pageSize) + " offset " + Integer.toString((currentPage - 1) * 10);
 
 			preparedStmt = connection.prepareStatement(sql);
 

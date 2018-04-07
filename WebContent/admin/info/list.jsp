@@ -67,8 +67,7 @@
 	<div class="rightinfo">
 		<div class="tools">
 			<ul class="toolbar">
-				<li class="click"><a
-					href="${path}category?option=toAddInfoPage"><span><img
+				<li class="click"><a href="${path}info?option=toAddInfoPage"><span><img
 							src="${path}admin/images/t01.png" /></span>添加信息</a></li>
 			</ul>
 		</div>
@@ -87,6 +86,7 @@
 				<tr>
 					<th style="width: 100px;">信息id</th>
 					<th>信息标题</th>
+					<th>类别</th>
 					<th style="width: 100px;">排序</th>
 					<th style="width: 100px;">是否发布</th>
 					<th style="width: 160px;">发布时间</th>
@@ -101,6 +101,7 @@
 							<tr>
 								<td><c:out value="${info.infoId}" /></td>
 								<td><c:out value="${info.title}" /></td>
+								<td><c:out value="${info.category.cname}" /></td>
 								<td><c:out value="${info.paiXu}" /></td>
 								<td><c:choose>
 										<c:when test="#info.publishStatus == 1">
@@ -113,7 +114,7 @@
 								<td><c:out value="${info.publishTime}" /></td>
 								<td><c:out value="${info.category.cname}" /></td>
 								<td><a
-									href='${path}admin/editInfo.action?infoId=<c:out value="${info.infoId}" />'>更新</a>
+									href='${path}info?option=editInfo&infoId=<c:out value="${info.infoId}" />'>更新</a>
 									&nbsp;|&nbsp; <a href='#'
 									onclick="del(<c:out value="${info.infoId}" />)">删除</a></td>
 							</tr>
