@@ -26,17 +26,77 @@ public class InfoDaoImpl implements InfoDao {
 
 	@Override
 	public void addInfo(Info info) {
+		try {
 
+			connection = ConnectionMySQL.getCon();
+
+			String sql = "insert into info values(null,'" + info.getAuthor() + "','" + info.getContent() + "','"
+					+ info.getContentAbstract() + "','" + info.getContentTitle() + "','" + info.getPaiXu() + "','"
+					+ info.getPicPath() + "','" + info.getPublishStatus() + "','" + info.getPublishTime() + "','"
+					+ info.getTitle() + "','" + info.getCid() + "')";
+
+			preparedStmt = connection.prepareStatement(sql);
+
+			preparedStmt.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void delInfo(Info info) {
+		try {
+			connection = ConnectionMySQL.getCon();
 
+			String sql = "delete from info where infoId='" + info.getInfoId() + "' ";
+			stmt = connection.prepareStatement(sql);
+			stmt.executeUpdate(sql);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public Info findInfoByInfoId(Integer infoId) {
-		return null;
+
+		Info info = null;
+
+		try {
+
+			connection = ConnectionMySQL.getCon();
+
+			String sql = "select * from info where infoId='" + infoId + "'";
+
+			preparedStmt = connection.prepareStatement(sql);
+
+			resultSet = preparedStmt.executeQuery();
+
+			if (resultSet.next()) {
+
+				info = new Info();
+
+				info.setInfoId(resultSet.getInt("infoId"));
+
+				info.setPicPath(resultSet.getString("picPath"));
+
+				return info;
+
+			} else {
+
+				return null;
+
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+			return null;
+
+		}
+
 	}
 
 	@Override

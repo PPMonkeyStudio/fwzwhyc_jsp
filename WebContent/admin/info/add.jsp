@@ -20,24 +20,6 @@
 <script type="text/javascript" src="../../js/jquery-1.8.0.min.js"></script>
 
 
-<script type="text/javascript">
-	$(document).ready(
-			function() {
-				var url = "${path}admin/findAllCategoryForDrop.action";
-				$.ajax({
-					type : 'get',
-					url : url,
-					dataType : 'json',
-					success : function(data) {
-						$.each(data, function(i, list) {
-							$("#cid").append(
-									"<option value='"+list.cid+"'>"
-											+ list.cname + "</option>");
-						})
-					}
-				})
-			})
-</script>
 </head>
 <body>
 	<div class="place">
@@ -51,7 +33,7 @@
 		<div class="formtitle">
 			<span>添加信息</span>
 		</div>
-		<form action="${path }admin/addInfo" name="ff" method="post"
+		<form action="${path}info?option=addInfo" name="ff" method="post" enctype="multipart/form-data"
 			onsubmit="return checkValue()">
 
 			<ul class="forminfo">
@@ -63,32 +45,25 @@
 					id="contentTitle" name="contentTitle" type="text" class="dfinput" /><i></i></li>
 				<li><label style="width: 150px;">信息类别（<font
 						style="color: Red; font-weight: bolder;">*</font>）：
-				</label> <select name="category.cid" id="cid" class="dfinput">
+				</label> <select name="cid" id="cid" class="dfinput">
 						<option value="">--请选择--</option>
-						<c:forEach items="${list }" var="c">
-							<option value="${c.cid }">${c.cname }</option>
+						<c:forEach items="${list}" var="category">
+							<option value="${category.cid }">${category.cname }</option>
 						</c:forEach>
 				</select> <i></i></li>
 				<li><label style="width: 150px;">作者（来源）：</label><input
 					id="author" name="author" type="text" class="dfinput" /><i></i></li>
-				<li><label style="width: 150px;">内容摘要：</label>
-				<textarea id="contentAbstract" name="contentAbstract" cols="100"
-						rows="4" style="width: 800px; height: 100px;" class="dfinput"></textarea><i></i></li>
+				<li><label style="width: 150px;">内容摘要：</label> <textarea
+						id="contentAbstract" name="contentAbstract" cols="100" rows="4"
+						style="width: 800px; height: 100px;" class="dfinput"></textarea><i></i></li>
 				<li><label style="width: 150px;">信息内容（<font
 						style="color: Red; font-weight: bolder;">*</font>）：
-				</label>
-				<textarea id="content" name="content" cols="100" rows="8"
-						style="width: 800px; height: 400px;" /> </textarea><i></i></li>
+				</label> <textarea id="content" name="content" cols="100" rows="8"
+						style="width: 800px; height: 400px;" class="dfinput" /> </textarea><i></i></li>
 				<li><label style="width: 150px;">排序：</label><input id="paiXu"
 					name="paiXu" type="text" value="10000" class="dfinput" /><i></i></li>
 				<li><label style="width: 150px;">图片：</label><input id="file1"
 					name="file" type="file" onchange="fileUpload();" /><i></i></li>
-				
-				
-				
-				<li><label style="width: 150px;">&nbsp;</label><img src=""
-					id="pic" width="120px" border="0" /><i></i></li>
-				<input id="picPath" name="picPath" type="hidden" />
 				<li><label style="width: 150px;">是否发布：</label><select
 					id="publishStatus" name="publishStatus" class="dfinput">
 						<option value="0">否</option>

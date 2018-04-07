@@ -103,6 +103,8 @@ public class Info {
 	}
 
 	public String getPublishTime() {
+		// Date myDate = new Date();
+		// publishTime = myDate.toLocaleString();
 		return publishTime;
 	}
 
@@ -117,4 +119,13 @@ public class Info {
 	public void setCid(Integer cid) {
 		this.cid = cid;
 	}
+
+	@Override
+	public String toString() {
+		return "Info [infoId=" + infoId + ", author=" + author + ", title=" + title + ", contentTitle=" + contentTitle
+				+ ", contentAbstract=" + contentAbstract + ", content=" + content + ", picPath=" + picPath
+				+ ", publishTime=" + publishTime + ", publishStatus=" + publishStatus + ", paiXu=" + paiXu + ", cid="
+				+ cid + ", category=" + category + "]";
+	}
+
 }

@@ -54,6 +54,11 @@ public class CategoryServlet extends HttpServlet {
 			updateCategory(request, response);
 			break;
 		}
+		case "toAddInfoPage": {
+			toAddInfoPage(request, response);
+			break;
+		}
+
 		default: {
 
 		}
@@ -64,6 +69,18 @@ public class CategoryServlet extends HttpServlet {
 	/*
 	 * 
 	 */
+
+	private void toAddInfoPage(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		categoryService = new CategoryServiceImpl();
+
+		list = categoryService.findAllCategory();
+
+		request.setAttribute("list", list);
+
+		request.getRequestDispatcher("/admin/info/add.jsp").forward(request, response);
+	}
 
 	/*
 	 * 后台查询信息类别数据

@@ -54,7 +54,9 @@
 }
 </style>
 </head>
+
 <body>
+
 	<div class="place">
 		<span>位置：</span>
 		<ul class="placeul">
@@ -65,7 +67,8 @@
 	<div class="rightinfo">
 		<div class="tools">
 			<ul class="toolbar">
-				<li class="click"><a href="${path}admin/info/add.jsp"><span><img
+				<li class="click"><a
+					href="${path}category?option=toAddInfoPage"><span><img
 							src="${path}admin/images/t01.png" /></span>添加信息</a></li>
 			</ul>
 		</div>
@@ -137,8 +140,9 @@
 							<c:out value="${pb.count}" />
 							条信息
 							<div style="height: 10px;"></div>
+
 							<c:choose>
-								<c:when test="#request.pb.currentPage == 1"> 首页&nbsp;&nbsp;上一页 </c:when>
+								<c:when test="${pb.currentPage <= 1}"> 首页&nbsp;&nbsp;上一页 </c:when>
 								<c:otherwise>
 									<a href='#' onclick="fy(1)">首页</a>
 									<a href='#'
@@ -146,12 +150,14 @@
 								</c:otherwise>
 							</c:choose>
 							<c:choose>
-								<c:when test="#request.pb.currentPage != #request.pb.totalPage">
+								<c:when test="${pb.currentPage < pb.totalPage}">
 									<a href='#'
 										onclick="fy(<c:out value="${pb.currentPage + 1}"/>)">下一页</a>
 									<a href='#' onclick="fy(<c:out value="${pb.totalPage}"/>)">尾页</a>
 								</c:when>
-								<c:otherwise>下一页&nbsp;&nbsp;尾页</c:otherwise>
+								<c:otherwise>
+								下一页&nbsp;&nbsp;尾页
+								</c:otherwise>
 							</c:choose>
 							&nbsp;&nbsp; 跳转至 <input type="text"
 								style="height: 22px; border: 1px solid #888; width: 30px; border-radius: 0.2rem;"
@@ -167,27 +173,22 @@
 		 function fy(page)
         {
 			 var form=document.getElementById("infoListForm");
-			 form.action="${pageContext.request.contextPath}/admin/findInfosByPage.action?currentPage=" + page ;
+			 form.action="${path}info?option=findInfosByPage&currentPage=" + page ;
 			 form.submit();
- 		   //window.document.location.href = "${pageContext.request.contextPath}/admin/findInfosByPage.action?currentPage=" + page 		  
         }
 		function validate()
         {
             var page = document.getElementById("page").value;
-            if(page > <c:out value="${request.pb.totalPage}"/> || page <= 0 )
-            {
-                alert("你输入的页数大于最大页数或小于最小页面，页面将跳转到首页！");
-                fy(1)
-             }else{
+           
             	fy(page)
-           }
+          
         }
 	</script>
 		<script type="text/javascript">
 		function del(infoId){
 			if(window.confirm("您确定要删除吗？"))
 			{
-			   location.href="${path}admin/delInfo.action?infoId="+infoId;
+			   location.href="${path}info?option=delInfo&infoId="+infoId;
 			 }
 		}
 	</script>

@@ -1,5 +1,6 @@
 package org.pxxy.service.impl;
 
+import java.io.File;
 import java.util.List;
 
 import org.pxxy.dao.InfoDao;
@@ -14,73 +15,98 @@ public class InfoServiceImpl implements InfoService {
 
 	@Override
 	public List<Info> findAllInfo() {
+		infoDao = new InfoDaoImpl();
 		return infoDao.findAllInfo();
 	}
 
 	@Override
 	public void addInfo(Info info) {
+		infoDao = new InfoDaoImpl();
 		infoDao.addInfo(info);
 	}
 
 	@Override
 	public void delInfo(Info info) {
+
+		infoDao = new InfoDaoImpl();
+
+		info = infoDao.findInfoByInfoId(info.getInfoId());
+
+		/*
+		 * 1.删除图片
+		 */
+		(new File("C://infopub/" + info.getPicPath())).delete();
+		/*
+		 * 2.删除记录
+		 */
 		infoDao.delInfo(info);
 
 	}
 
 	@Override
 	public Info findInfoByInfoId(Integer infoId) {
+		infoDao = new InfoDaoImpl();
 		return infoDao.findInfoByInfoId(infoId);
 	}
 
 	@Override
 	public void updateInfo(Info info) {
+		infoDao = new InfoDaoImpl();
 		infoDao.updateInfo(info);
 
 	}
 
 	@Override
 	public List<Info> findAllInfo(Integer cid) {
+		infoDao = new InfoDaoImpl();
 		return infoDao.findAllInfo(cid);
 	}
 
 	@Override
 	public List<Info> findFyjjInfos() {
+		infoDao = new InfoDaoImpl();
 		return infoDao.findFyjjInfos();
 	}
 
 	@Override
 	public List<Info> findFyzxInfos() {
+		infoDao = new InfoDaoImpl();
 		return infoDao.findFyzxInfos();
 	}
 
 	@Override
 	public List<Info> findXsjlInfos() {
+		infoDao = new InfoDaoImpl();
 		return infoDao.findXsjlInfos();
 	}
 
 	@Override
 	public List<Info> findHzptInfos() {
+		infoDao = new InfoDaoImpl();
 		return infoDao.findHzptInfos();
 	}
 
 	@Override
 	public List<Info> findFycrInfos() {
+		infoDao = new InfoDaoImpl();
 		return infoDao.findFycrInfos();
 	}
 
 	@Override
 	public List<Info> findFyjtInfos() {
+		infoDao = new InfoDaoImpl();
 		return infoDao.findFyjtInfos();
 	}
 
 	@Override
 	public List<Info> findInfosByPage(Integer cid) {
+		infoDao = new InfoDaoImpl();
 		return infoDao.findInfosByPage(cid);
 	}
 
 	@Override
 	public List<Info> findAllInfo(String keywords) {
+		infoDao = new InfoDaoImpl();
 		return infoDao.findAllInfo(keywords);
 	}
 
@@ -127,6 +153,7 @@ public class InfoServiceImpl implements InfoService {
 
 	@Override
 	public Info findXsjlInfo() {
+		infoDao = new InfoDaoImpl();
 		return infoDao.findXsjlInfo();
 	}
 
