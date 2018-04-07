@@ -45,7 +45,7 @@
 		</ul>
 
 		<div class="user">
-			<span><s:property value="#session.userName" /></span>
+			<span>${session.userName}</span>
 		</div>
 
 	</div>

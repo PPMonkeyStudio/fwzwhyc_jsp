@@ -33,8 +33,7 @@
 
 
 		<div class="welinfo">
-			<span><img src="images/sun.png" alt="天气" /></span> <b><s:property
-					value="#session.userName" />你好，欢迎使用信息管理系统</b>
+			<span><img src="images/sun.png" alt="天气" /></span> <b>你好，欢迎使用信息管理系统</b>
 		</div>
 
 		<div class="xline"></div>
@@ -42,16 +41,16 @@
 		<ul class="iconlist">
 
 			<li><img src="images/ico06.png" />
-			<p>
-					<a href="${path }admin/findInfosByPage">查询信息</a>
+				<p>
+					<a href="${path}info?option=findInfosByPage&currentPage=1">查询信息</a>
 				</p></li>
 			<li><img src="images/ico02.png" />
-			<p>
-					<a href="${path }admin/info/add.jsp">发布信息</a>
+				<p>
+					<a href="${path}info?option=toAddInfoPage">发布信息</a>
 				</p></li>
 			<li><img src="images/ico03.png" />
-			<p>
-					<a href="${path }admin/findAllCategory">信息类别管理</a>
+				<p>
+					<a href="${path}category?option=findAllCategory">信息类别管理</a>
 				</p></li>
 
 		</ul>

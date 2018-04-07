@@ -54,8 +54,8 @@
 		<div class="item col-12">
 			<div class="item-header">
 				<div class="item-header-r">
-					<a href="${Path}/findInfosByCid&cid=101" class="icon-more"
-						title="更多"></a>
+					<a href="${Path}info?option=findInfosByCid&cid=101&currentPage=1"
+						class="icon-more" title="更多"></a>
 				</div>
 				<div class="item-header-l">
 					<strong>非遗资讯</strong><span>INFORMATION</span>
@@ -93,7 +93,7 @@
 			<div class="item col-6 col-r">
 				<div class="item-header">
 					<div class="item-header-r">
-						<a href="${Path}info?option=findInfosByCid&cid=102"
+						<a href="${Path}info?option=findInfosByCid&cid=102&currentPage=1"
 							class="icon-more" title="更多"></a>
 					</div>
 					<div class="item-header-l">
@@ -128,7 +128,7 @@
 			<div class="item col-6 col-l">
 				<div class="item-header">
 					<div class="item-header-r">
-						<a href="${Path}info?option=findInfosByCid&cid=103"
+						<a href="${Path}info?option=findInfosByCid&cid=103&currentPage=1"
 							class="icon-more" title="更多"></a>
 					</div>
 					<div class="item-header-l">
@@ -151,7 +151,7 @@
 			<div class="item col-4 col-r">
 				<div class="item-header">
 					<div class="item-header-r">
-						<a href="${Path}info?option=findInfosByCid&cid=104"
+						<a href="${Path}info?option=findInfosByCid&cid=104&currentPage=1"
 							class="icon-more" title="更多"></a>
 					</div>
 					<div class="item-header-l">
@@ -172,7 +172,7 @@
 			<div class="item col-4 col-rl">
 				<div class="item-header">
 					<div class="item-header-r">
-						<a href="${Path}info?option=findInfosByCid&cid=105"
+						<a href="${Path}info?option=findInfosByCid&cid=105&currentPage=1"
 							class="icon-more" title="更多"></a>
 					</div>
 					<div class="item-header-l">
@@ -193,7 +193,7 @@
 			<div class="item col-4 col-l">
 				<div class="item-header">
 					<div class="item-header-r">
-						<a href="${Path}info?option=findInfosByCid&cid=106"
+						<a href="${Path}info?option=findInfosByCid&cid=106&currentPage=1"
 							class="icon-more" title="更多"></a>
 					</div>
 					<div class="item-header-l">
