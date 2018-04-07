@@ -3,7 +3,7 @@
 	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:import var="data" url="/category?option=findNaviCategory" />
 <div class="header">
-	<a href="/"><img src="./img/logo.png" class="logo" /></a> <a
+	<a href="index.jsp"><img src="./img/logo.png" class="logo" /></a> <a
 		href="javascript:void(0)" class="icon-menu" id="menu"></a>
 	<div class="menu" id="menu-box">
 		<a href="javascript:void(0)" class="icon-close" id="menu-close"></a>
