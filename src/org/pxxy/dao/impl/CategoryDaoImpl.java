@@ -74,7 +74,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
 			connection = ConnectionMySQL.getCon();
 
-			String sql = "insert into category values('" + category.getCid() + "','" + category.getCname() + "' , '1')";
+			String sql = "insert into category values('" + category.getCid() + "','" + category.getCname() + "')";
 
 			preparedStmt = connection.prepareStatement(sql);
 
@@ -134,8 +134,6 @@ public class CategoryDaoImpl implements CategoryDao {
 
 				category.setCname(resultSet.getString("cname"));
 
-				category.setPid(resultSet.getInt("pid"));
-
 				return category;
 
 			} else {
@@ -189,7 +187,6 @@ public class CategoryDaoImpl implements CategoryDao {
 				category = new Category();
 				category.setCid(resultSet.getInt("cid"));
 				category.setCname(resultSet.getString("cname"));
-				category.setPid(resultSet.getInt("pid"));
 				/*
 				 * 
 				 */

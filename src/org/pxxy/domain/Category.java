@@ -6,8 +6,6 @@ public class Category {
 
 	private String cname;
 
-	private Integer pid;
-
 	public Integer getCid() {
 		return cid;
 	}
@@ -24,17 +22,9 @@ public class Category {
 		this.cname = cname;
 	}
 
-	public Integer getPid() {
-		return pid;
-	}
-
-	public void setPid(Integer pid) {
-		this.pid = pid;
-	}
-
 	@Override
 	public String toString() {
-		return "Category [cid=" + cid + ", cname=" + cname + ", pid=" + pid + "]";
+		return "Category [cid=" + cid + ", cname=" + cname + "]";
 	}
 
 }
