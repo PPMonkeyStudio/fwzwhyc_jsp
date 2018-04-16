@@ -28,7 +28,7 @@
 		<h1>后台管理系统</h1>
 		</header>
 		<div class="login-main">
-			<form action="${path}user?option=login" class="layui-form"
+			<form action="${path}verificationLogin.jsp" class="layui-form"
 				method="post">
 				<div align="center" style="height: 30px;">
 					<font style="color: #ff0000; font-size: 16px;">${msg}</font>
