@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+//连接数据库的工具类
 public class ConnectionMySQL {
 
 	// 驱动名
@@ -16,8 +17,8 @@ public class ConnectionMySQL {
 	static final String userPwd = "root";
 	// 数据库连接对象
 	static Connection dbConn = null;
-
 	// 加载数据库驱动
+
 	static {
 		try {
 			Class.forName(driverName);

@@ -1,8 +1,10 @@
 package org.pxxy.domain;
 
+//用户类，对应数据库中的user表
 public class User {
-	private String userName;
-	private String password;
+
+	private String userName;// 用户名
+	private String password;// 密码
 
 	public String getUserName() {
 		return userName;
@@ -18,11 +20,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	@Override
-	public String toString() {
-		return "User [userName=" + userName + ", password=" + password + "]";
 	}
 
 }

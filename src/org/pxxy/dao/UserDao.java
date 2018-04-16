@@ -14,8 +14,10 @@ public class UserDao {
 	static Connection connection = null;
 	static PreparedStatement preparedStmt = null;
 	static Statement stmt = null;
+	// 结果集
 	static ResultSet resultSet = null;
 
+	// 通过用户账号userName及密码password查询用户，若userName及password都匹配则查询到一条记录，封装在User类中返回，否则返回null。
 	public User login(User user) {
 		try {
 			connection = ConnectionMySQL.getCon();
