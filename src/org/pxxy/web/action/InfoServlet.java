@@ -16,13 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.pxxy.dao.CategoryDao;
+import org.pxxy.dao.InfoDao;
 import org.pxxy.domain.Category;
 import org.pxxy.domain.Info;
 import org.pxxy.domain.PageBean;
-import org.pxxy.service.CategoryService;
-import org.pxxy.service.InfoService;
-import org.pxxy.service.impl.CategoryServiceImpl;
-import org.pxxy.service.impl.InfoServiceImpl;
 import org.pxxy.utils.Time;
 import org.pxxy.utils.UUIDUtils;
 
@@ -31,8 +29,8 @@ public class InfoServlet extends HttpServlet {
 	/*
 	 * 
 	 */
-	private CategoryService categoryService;
-	private InfoService infoService;
+	CategoryDao categoryDao;
+	InfoDao infoDao;
 	/*
 	 * 
 	 */
@@ -105,15 +103,15 @@ public class InfoServlet extends HttpServlet {
 
 	private void findInfoByInfoId(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		infoService = new InfoServiceImpl();
+		infoDao = new InfoDao();
 
-		Info info = infoService.findInfoByInfoId(Integer.parseInt(request.getParameter("infoId")));
+		Info info = infoDao.findInfoByInfoId(Integer.parseInt(request.getParameter("infoId")));
 		request.setAttribute("info", info);
 		/*
 		 * 
 		 */
-		categoryService = new CategoryServiceImpl();
-		Category category = categoryService.findCategoryByCid(Integer.parseInt(request.getParameter("cid")));
+		categoryDao = new CategoryDao();
+		Category category = categoryDao.findCategoryByCid(Integer.parseInt(request.getParameter("cid")));
 		request.setAttribute("category", category);
 		/*
 		 * 
@@ -127,16 +125,15 @@ public class InfoServlet extends HttpServlet {
 	 */
 	private void findInfosByCid(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		infoService = new InfoServiceImpl();
-		PageBean<Info> pb = infoService.findInfosByCid(Integer.parseInt(request.getParameter("currentPage")), pageSize,
+		infoDao = new InfoDao();
+		PageBean<Info> pb = infoDao.findInfosByCid(Integer.parseInt(request.getParameter("currentPage")), pageSize,
 				Integer.parseInt(request.getParameter("cid")));
 		request.setAttribute("pb", pb);
 		/*
 		 * 
 		 */
-		categoryService = new CategoryServiceImpl();
-		Category category = categoryService.findCategoryByCid(Integer.parseInt(request.getParameter("cid")));
+		categoryDao = new CategoryDao();
+		Category category = categoryDao.findCategoryByCid(Integer.parseInt(request.getParameter("cid")));
 		request.setAttribute("category", category);
 		/*
 		 * 
@@ -145,49 +142,49 @@ public class InfoServlet extends HttpServlet {
 	}
 
 	/*
-	 * 获取图片
+	 * 获取首页栏目的新闻
 	 */
-
 	private void findInfos(HttpServletRequest request, HttpServletResponse response) {
-		infoService = new InfoServiceImpl();
+		infoDao = new InfoDao();
 		/*
 		 * 非遗资讯
 		 */
-		List<Info> fyzxInfos = infoService.findFyzxInfos();
+		List<Info> fyzxInfos = infoDao.findFyzxInfos();
 		request.setAttribute("fyzxInfos", fyzxInfos);
 		/*
 		 * 学术交流
 		 */
-		List<Info> xsjlInfos = infoService.findXsjlInfos();
+		List<Info> xsjlInfos = infoDao.findXsjlInfos();
 		request.setAttribute("xsjlInfos", xsjlInfos);
 		/*
 		 * 
 		 */
-		List<Info> fyjtInfos = infoService.findFyjtInfos();
+		List<Info> fyjtInfos = infoDao.findFyjtInfos();
 		request.setAttribute("fyjtInfos", fyjtInfos);
 		/*
 		 * 
 		 */
-		List<Info> fyjjInfos = infoService.findFyjjInfos();
+		List<Info> fyjjInfos = infoDao.findFyjjInfos();
 		request.setAttribute("fyjjInfos", fyjjInfos);
 		/*
 		 * 
 		 */
-		List<Info> hzptInfos = infoService.findHzptInfos();
+		List<Info> hzptInfos = infoDao.findHzptInfos();
 		request.setAttribute("hzptInfos", hzptInfos);
 		/*
 		 * 
 		 */
-		List<Info> fycrInfos = infoService.findFycrInfos();
+		List<Info> fycrInfos = infoDao.findFycrInfos();
 		request.setAttribute("fycrInfos", fycrInfos);
 		/*
 		 * 
 		 */
 	}
 
+	//
 	private void updateInfo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		infoService = new InfoServiceImpl();
+		infoDao = new InfoDao();
 		/*
 		 * 
 		 */
@@ -201,22 +198,18 @@ public class InfoServlet extends HttpServlet {
 		info.setPublishStatus(request.getParameter("publishStatus"));
 		info.setPaiXu(Integer.parseInt(request.getParameter("paiXu")));
 		info.setCid(Integer.parseInt(request.getParameter("cid")));
-
-		infoService.updateInfo(info);
+		infoDao.updateInfo(info);
 		/*
 		 * 
 		 */
-		PageBean<Info> pb = infoService.findInfosByPage(1, pageSize, "");
-
+		PageBean<Info> pb = infoDao.findInfosByPage(1, pageSize, "");
 		request.setAttribute("pb", pb);
-
 		request.getRequestDispatcher("/admin/info/list.jsp").forward(request, response);
 	}
 
 	private void getImg(HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
 		String img = request.getParameter("imgName");
 		FileInputStream fileInputStream = null;
-
 		try {
 			fileInputStream = new FileInputStream("C:/infopub/" + img);
 		} catch (FileNotFoundException e) {
@@ -225,14 +218,10 @@ public class InfoServlet extends HttpServlet {
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
 			}
-
 		}
-
 		try {
 			int i;
-
 			i = fileInputStream.available();
-
 			byte[] buff = new byte[i];
 			fileInputStream.read(buff);
 			fileInputStream.close();
@@ -251,39 +240,29 @@ public class InfoServlet extends HttpServlet {
 	 */
 	private void editInfo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		infoService = new InfoServiceImpl();
-		categoryService = new CategoryServiceImpl();
+		infoDao = new InfoDao();
+		categoryDao = new CategoryDao();
 		/*
 		 * 
 		 */
-		Info info = infoService.findInfoByInfoId(Integer.parseInt(request.getParameter("infoId")));
-
+		Info info = infoDao.findInfoByInfoId(Integer.parseInt(request.getParameter("infoId")));
 		request.setAttribute("info", info);
 		/*
 		 * 
 		 */
-
-		List<Category> categorylist = categoryService.findAllCategory();
-
+		List<Category> categorylist = categoryDao.findAllCategory();
 		request.setAttribute("categorylist", categorylist);
-
 		/*
 		 * 
 		 */
-
 		request.getRequestDispatcher("/admin/info/edit.jsp").forward(request, response);
 	}
 
 	private void toAddInfoPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		categoryService = new CategoryServiceImpl();
-
-		List<Category> list = categoryService.findAllCategory();
-
+		categoryDao = new CategoryDao();
+		List<Category> list = categoryDao.findAllCategory();
 		request.setAttribute("list", list);
-
 		request.getRequestDispatcher("/admin/info/add.jsp").forward(request, response);
 	}
 
@@ -292,32 +271,25 @@ public class InfoServlet extends HttpServlet {
 	 */
 	private void delInfo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		infoService = new InfoServiceImpl();
+		infoDao = new InfoDao();
 		Info info = new Info();
 		info.setInfoId(Integer.parseInt(request.getParameter("infoId")));
-		infoService.delInfo(info);
-
+		infoDao.delInfo(info);
 		/*
 		 * 
 		 */
-		PageBean<Info> pb = infoService.findInfosByPage(1, pageSize, "");
-
+		PageBean<Info> pb = infoDao.findInfosByPage(1, pageSize, "");
 		request.setAttribute("pb", pb);
-
 		request.getRequestDispatcher("/admin/info/list.jsp").forward(request, response);
-
 	}
 
 	/*
 	 * 分页查询新闻
 	 */
-	public void findInfosByPage(HttpServletRequest request, HttpServletResponse response)
+	private void findInfosByPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		infoService = new InfoServiceImpl();
-
+		infoDao = new InfoDao();
 		String keywords = request.getParameter("keywords");
-
 		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		System.out.println(currentPage);
 		if (keywords != null) {
@@ -325,23 +297,16 @@ public class InfoServlet extends HttpServlet {
 		} else {
 			keywords = "";
 		}
-
-		PageBean<Info> pb = infoService.findInfosByPage(currentPage, pageSize, keywords);
-
+		PageBean<Info> pb = infoDao.findInfosByPage(currentPage, pageSize, keywords);
 		request.setAttribute("pb", pb);
-
 		request.setAttribute("keywords", keywords);
-
 		request.getRequestDispatcher("/admin/info/list.jsp").forward(request, response);
 	}
 
 	private void addInfo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		infoService = new InfoServiceImpl();
-
+		infoDao = new InfoDao();
 		Info info = new Info();
-
 		String imgName = null;
 		// 1、创建一个DiskFileItemFactory工厂
 		DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
@@ -349,16 +314,13 @@ public class InfoServlet extends HttpServlet {
 		ServletFileUpload servletFileUpload = new ServletFileUpload(diskFileItemFactory);
 		// 解决上传文件名的中文乱码
 		servletFileUpload.setHeaderEncoding("UTF-8");
-
 		try {
 			// 1. 得到 FileItem 的集合 items
 			List<FileItem> list_fileItems = servletFileUpload.parseRequest(request);
-
 			// 2. 遍历 items:
 			for (FileItem fileItem : list_fileItems) {
 				// 若是一个一般的表单域, 打印信息
 				if (fileItem.isFormField()) {
-
 					switch (fileItem.getFieldName()) {
 					case "title": {
 						info.setTitle(fileItem.getString("utf-8"));
@@ -368,9 +330,7 @@ public class InfoServlet extends HttpServlet {
 						info.setContentTitle(fileItem.getString("utf-8"));
 						break;
 					}
-
 					case "cid": {
-
 						info.setCid(Integer.parseInt(fileItem.getString("utf-8")));
 						break;
 					}
@@ -397,44 +357,23 @@ public class InfoServlet extends HttpServlet {
 					}
 					// System.out.println(fileItem.getFieldName() + ": " +
 					// fileItem.getString("utf-8"));
-
 				} // if
 					// 若是文件域
 				else {
 					String fileName = fileItem.getName();
 					long sizeInBytes = fileItem.getSize();
-					// System.out.println("原文件名fileName:" + fileName);
-					// System.out.println("sizeInBytes:" + sizeInBytes);
-
 					if (sizeInBytes != 0) {
 						String[] fileNameArray = fileName.split("\\.");
-
-						// System.out.println("fileNameArray.length:" +
-						// fileNameArray.length);
-						// System.out.println("fileNameArray[0]:" +
-						// fileNameArray[0]);
-						// System.out.println("fileNameArray[1]:" +
-						// fileNameArray[1]);
-
 						imgName = UUIDUtils.getUUId() + "." + fileNameArray[1];
-						System.out.println("改名后imgName:" + imgName);
-
 						InputStream inputStream = fileItem.getInputStream();
 						byte[] buffer = new byte[1024];
 						int lenth = 0;
-
 						String filePath = "C:\\infopub\\" + imgName;// 文件最终上传的位置
-
 						info.setPicPath(imgName);
-
-						// System.out.println(filePath);
-
 						OutputStream outputStream = new FileOutputStream(filePath);
-
 						while ((lenth = inputStream.read(buffer)) != -1) {
 							outputStream.write(buffer, 0, lenth);
 						}
-
 						outputStream.close();
 						inputStream.close();
 					} else {
@@ -442,24 +381,17 @@ public class InfoServlet extends HttpServlet {
 					}
 				} // else
 			} // for
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		info.setPublishTime(Time.getDateSecond());
-		infoService.addInfo(info);
-
+		infoDao.addInfo(info);
 		/*
 		 * 
 		 */
-		PageBean<Info> pb = infoService.findInfosByPage(1, pageSize, "");
-
+		PageBean<Info> pb = infoDao.findInfosByPage(1, pageSize, "");
 		request.setAttribute("pb", pb);
-
 		request.getRequestDispatcher("/admin/info/list.jsp").forward(request, response);
-
-		// System.out.println(pb);
-
 	}
 	/*
 	 * 

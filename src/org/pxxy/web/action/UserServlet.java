@@ -9,14 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.pxxy.dao.UserDao;
 import org.pxxy.domain.User;
-import org.pxxy.service.UserService;
-import org.pxxy.service.impl.UserServiceImpl;
 
 @SuppressWarnings("serial")
 public class UserServlet extends HttpServlet {
 
-	UserService userService;
+	UserDao userDao;
 	HttpSession session;
 
 	@Override
@@ -47,31 +46,15 @@ public class UserServlet extends HttpServlet {
 
 	}
 
-	private void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		session = request.getSession();
-
-		session.removeAttribute("userName");
-
-		PrintWriter out = null;
-		try {
-			out = response.getWriter();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		out.print("<script language=javascript>");
-		out.print("top.location.href='" + request.getContextPath() + "/index.jsp'");
-		out.print("</script>");
-
-	}
-
+	// 登录
 	public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		userService = new UserServiceImpl();
+		userDao = new UserDao();
 		User user = new User();
 
 		user.setUserName(request.getParameter("userName"));
 		user.setPassword(request.getParameter("password"));
 
-		user = userService.login(user);
+		user = userDao.login(user);
 
 		if (user != null) {
 			session = request.getSession();
@@ -91,6 +74,24 @@ public class UserServlet extends HttpServlet {
 			request.getRequestDispatcher("/login.jsp").forward(request, response);
 
 		}
+
+	}
+
+	// 登出
+	private void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		session = request.getSession();
+
+		session.removeAttribute("userName");
+
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		out.print("<script language=javascript>");
+		out.print("top.location.href='" + request.getContextPath() + "/index.jsp'");
+		out.print("</script>");
 
 	}
 }

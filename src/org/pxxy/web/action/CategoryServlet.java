@@ -8,15 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.pxxy.dao.CategoryDao;
 import org.pxxy.domain.Category;
-import org.pxxy.service.CategoryService;
-import org.pxxy.service.impl.CategoryServiceImpl;
 
 @SuppressWarnings("serial")
 public class CategoryServlet extends HttpServlet {
 
-	private CategoryService categoryService;
-	private List<Category> list = null;
+	CategoryDao categoryDao;
+	List<Category> list = null;
 
 	/*
 	 * 
@@ -68,8 +67,8 @@ public class CategoryServlet extends HttpServlet {
 	 */
 
 	private void findNaviCategory(HttpServletRequest request, HttpServletResponse response) {
-		categoryService = new CategoryServiceImpl();
-		List<Category> categoryList = categoryService.findNaviCategory();
+		categoryDao = new CategoryDao();
+		List<Category> categoryList = categoryDao.findNaviCategory();
 		request.setAttribute("categoryList", categoryList);
 	}
 
@@ -77,12 +76,12 @@ public class CategoryServlet extends HttpServlet {
 	 * 后台查询信息类别数据
 	 * 
 	 */
-	public void findAllCategory(HttpServletRequest request, HttpServletResponse response)
+	private void findAllCategory(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		categoryService = new CategoryServiceImpl();
+		categoryDao = new CategoryDao();
 
-		list = categoryService.findAllCategory();
+		list = categoryDao.findAllCategory();
 
 		request.setAttribute("list", list);
 
@@ -93,10 +92,10 @@ public class CategoryServlet extends HttpServlet {
 	/*
 	 * 添加新的类别
 	 */
-	public void addCategory(HttpServletRequest request, HttpServletResponse response)
+	private void addCategory(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		categoryService = new CategoryServiceImpl();
+		categoryDao = new CategoryDao();
 		/*
 		 * 
 		 */
@@ -106,12 +105,12 @@ public class CategoryServlet extends HttpServlet {
 
 		category.setCname(request.getParameter("cname"));
 
-		categoryService.addCategory(category);
+		categoryDao.addCategory(category);
 
 		/*
 		 * 重新查询所有类别
 		 */
-		list = categoryService.findAllCategory();
+		list = categoryDao.findAllCategory();
 
 		request.setAttribute("list", list);
 
@@ -123,18 +122,18 @@ public class CategoryServlet extends HttpServlet {
 	 * 删除一条类别
 	 */
 
-	public void delCategory(HttpServletRequest request, HttpServletResponse response)
+	private void delCategory(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		categoryService = new CategoryServiceImpl();
+		categoryDao = new CategoryDao();
 		Category category = new Category();
 
 		category.setCid(Integer.parseInt(request.getParameter("cid")));
 
-		categoryService.delCategory(category);
+		categoryDao.delCategory(category);
 		/*
 		 * 重新查询所有类别
 		 */
-		list = categoryService.findAllCategory();
+		list = categoryDao.findAllCategory();
 
 		request.setAttribute("list", list);
 
@@ -144,12 +143,12 @@ public class CategoryServlet extends HttpServlet {
 	/*
 	 * 对已有类别进行编辑
 	 */
-	public void editCategory(HttpServletRequest request, HttpServletResponse response)
+	private void editCategory(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		categoryService = new CategoryServiceImpl();
+		categoryDao = new CategoryDao();
 
-		Category category = categoryService.findCategoryByCid(Integer.parseInt(request.getParameter("cid")));
+		Category category = categoryDao.findCategoryByCid(Integer.parseInt(request.getParameter("cid")));
 
 		request.setAttribute("category", category);
 
@@ -157,20 +156,20 @@ public class CategoryServlet extends HttpServlet {
 	}
 
 	/*
-	 * 
+	 * 更新类别的信息
 	 */
 	private void updateCategory(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		categoryService = new CategoryServiceImpl();
+		categoryDao = new CategoryDao();
 		Category category = new Category();
 
 		category.setCid(Integer.parseInt(request.getParameter("cid")));
 		category.setCname(request.getParameter("cname"));
-		categoryService.updateCategory(category);
+		categoryDao.updateCategory(category);
 		/*
 		 * 重新查询所有类别
 		 */
-		list = categoryService.findAllCategory();
+		list = categoryDao.findAllCategory();
 
 		request.setAttribute("list", list);
 
