@@ -26,14 +26,6 @@ import org.pxxy.utils.UUIDUtils;
 
 @SuppressWarnings("serial")
 public class InfoServlet extends HttpServlet {
-	/*
-	 * 
-	 */
-	CategoryDao categoryDao;
-	InfoDao infoDao;
-	/*
-	 * 
-	 */
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -103,14 +95,14 @@ public class InfoServlet extends HttpServlet {
 
 	private void findInfoByInfoId(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		infoDao = new InfoDao();
+		InfoDao infoDao = new InfoDao();
 
 		Info info = infoDao.findInfoByInfoId(Integer.parseInt(request.getParameter("infoId")));
 		request.setAttribute("info", info);
 		/*
 		 * 
 		 */
-		categoryDao = new CategoryDao();
+		CategoryDao categoryDao = new CategoryDao();
 		Category category = categoryDao.findCategoryByCid(Integer.parseInt(request.getParameter("cid")));
 		request.setAttribute("category", category);
 		/*
@@ -125,14 +117,14 @@ public class InfoServlet extends HttpServlet {
 	 */
 	private void findInfosByCid(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		infoDao = new InfoDao();
+		InfoDao infoDao = new InfoDao();
 		PageBean<Info> pb = infoDao.findInfosByCid(Integer.parseInt(request.getParameter("currentPage")), pageSize,
 				Integer.parseInt(request.getParameter("cid")));
 		request.setAttribute("pb", pb);
 		/*
 		 * 
 		 */
-		categoryDao = new CategoryDao();
+		CategoryDao categoryDao = new CategoryDao();
 		Category category = categoryDao.findCategoryByCid(Integer.parseInt(request.getParameter("cid")));
 		request.setAttribute("category", category);
 		/*
@@ -145,7 +137,7 @@ public class InfoServlet extends HttpServlet {
 	 * 获取首页栏目的新闻
 	 */
 	private void findInfos(HttpServletRequest request, HttpServletResponse response) {
-		infoDao = new InfoDao();
+		InfoDao infoDao = new InfoDao();
 		/*
 		 * 非遗资讯
 		 */
@@ -184,7 +176,7 @@ public class InfoServlet extends HttpServlet {
 	//
 	private void updateInfo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		infoDao = new InfoDao();
+		InfoDao infoDao = new InfoDao();
 		/*
 		 * 
 		 */
@@ -240,8 +232,8 @@ public class InfoServlet extends HttpServlet {
 	 */
 	private void editInfo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		infoDao = new InfoDao();
-		categoryDao = new CategoryDao();
+		InfoDao infoDao = new InfoDao();
+		CategoryDao categoryDao = new CategoryDao();
 		/*
 		 * 
 		 */
@@ -260,7 +252,7 @@ public class InfoServlet extends HttpServlet {
 
 	private void toAddInfoPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		categoryDao = new CategoryDao();
+		CategoryDao categoryDao = new CategoryDao();
 		List<Category> list = categoryDao.findAllCategory();
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/admin/info/add.jsp").forward(request, response);
@@ -271,7 +263,7 @@ public class InfoServlet extends HttpServlet {
 	 */
 	private void delInfo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		infoDao = new InfoDao();
+		InfoDao infoDao = new InfoDao();
 		Info info = new Info();
 		info.setInfoId(Integer.parseInt(request.getParameter("infoId")));
 		infoDao.delInfo(info);
@@ -288,10 +280,9 @@ public class InfoServlet extends HttpServlet {
 	 */
 	private void findInfosByPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		infoDao = new InfoDao();
+		InfoDao infoDao = new InfoDao();
 		String keywords = request.getParameter("keywords");
 		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		System.out.println(currentPage);
 		if (keywords != null) {
 			keywords = keywords.trim();
 		} else {
@@ -305,7 +296,7 @@ public class InfoServlet extends HttpServlet {
 
 	private void addInfo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		infoDao = new InfoDao();
+		InfoDao infoDao = new InfoDao();
 		Info info = new Info();
 		String imgName = null;
 		// 1、创建一个DiskFileItemFactory工厂

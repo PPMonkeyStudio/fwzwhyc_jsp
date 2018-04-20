@@ -14,9 +14,6 @@ import org.pxxy.domain.Category;
 @SuppressWarnings("serial")
 public class CategoryServlet extends HttpServlet {
 
-	CategoryDao categoryDao;
-	List<Category> list = null;
-
 	/*
 	 * 
 	 */
@@ -67,7 +64,7 @@ public class CategoryServlet extends HttpServlet {
 	 */
 
 	private void findNaviCategory(HttpServletRequest request, HttpServletResponse response) {
-		categoryDao = new CategoryDao();
+		CategoryDao categoryDao = new CategoryDao();
 		List<Category> categoryList = categoryDao.findNaviCategory();
 		request.setAttribute("categoryList", categoryList);
 	}
@@ -79,9 +76,9 @@ public class CategoryServlet extends HttpServlet {
 	private void findAllCategory(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		categoryDao = new CategoryDao();
+		CategoryDao categoryDao = new CategoryDao();
 
-		list = categoryDao.findAllCategory();
+		List<Category> list = categoryDao.findAllCategory();
 
 		request.setAttribute("list", list);
 
@@ -95,7 +92,7 @@ public class CategoryServlet extends HttpServlet {
 	private void addCategory(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		categoryDao = new CategoryDao();
+		CategoryDao categoryDao = new CategoryDao();
 		/*
 		 * 
 		 */
@@ -110,7 +107,7 @@ public class CategoryServlet extends HttpServlet {
 		/*
 		 * 重新查询所有类别
 		 */
-		list = categoryDao.findAllCategory();
+		List<Category> list = categoryDao.findAllCategory();
 
 		request.setAttribute("list", list);
 
@@ -124,7 +121,7 @@ public class CategoryServlet extends HttpServlet {
 
 	private void delCategory(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		categoryDao = new CategoryDao();
+		CategoryDao categoryDao = new CategoryDao();
 		Category category = new Category();
 
 		category.setCid(Integer.parseInt(request.getParameter("cid")));
@@ -133,7 +130,7 @@ public class CategoryServlet extends HttpServlet {
 		/*
 		 * 重新查询所有类别
 		 */
-		list = categoryDao.findAllCategory();
+		List<Category> list = categoryDao.findAllCategory();
 
 		request.setAttribute("list", list);
 
@@ -146,7 +143,7 @@ public class CategoryServlet extends HttpServlet {
 	private void editCategory(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		categoryDao = new CategoryDao();
+		CategoryDao categoryDao = new CategoryDao();
 
 		Category category = categoryDao.findCategoryByCid(Integer.parseInt(request.getParameter("cid")));
 
@@ -160,7 +157,7 @@ public class CategoryServlet extends HttpServlet {
 	 */
 	private void updateCategory(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		categoryDao = new CategoryDao();
+		CategoryDao categoryDao = new CategoryDao();
 		Category category = new Category();
 
 		category.setCid(Integer.parseInt(request.getParameter("cid")));
@@ -169,7 +166,7 @@ public class CategoryServlet extends HttpServlet {
 		/*
 		 * 重新查询所有类别
 		 */
-		list = categoryDao.findAllCategory();
+		List<Category> list = categoryDao.findAllCategory();
 
 		request.setAttribute("list", list);
 

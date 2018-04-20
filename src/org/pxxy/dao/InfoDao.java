@@ -20,10 +20,6 @@ public class InfoDao {
 	static Statement stmt = null;
 	static ResultSet resultSet = null;
 
-	public List<Info> findAllInfo() {
-		return null;
-	}
-
 	public void addInfo(Info info) {
 		try {
 
@@ -43,6 +39,7 @@ public class InfoDao {
 		}
 	}
 
+	// 根据infoId删除信息
 	public void delInfo(Info info) {
 
 		// 通过获取id获取到要删除的info
@@ -138,10 +135,6 @@ public class InfoDao {
 		}
 	}
 
-	public List<Info> findAllInfo(Integer cid) {
-		return null;
-	}
-
 	public List<Info> findFyzxInfos() {
 
 		try {
@@ -223,10 +216,6 @@ public class InfoDao {
 			e.printStackTrace();
 			return null;
 		}
-	}
-
-	public Info findXsjlInfo() {
-		return null;
 	}
 
 	public List<Info> findFyjjInfos() {
@@ -394,14 +383,6 @@ public class InfoDao {
 		}
 	}
 
-	public List<Info> findInfosByPage(Integer cid) {
-		return null;
-	}
-
-	public List<Info> findAllInfo(String keywords) {
-		return null;
-	}
-
 	public int getInfoCount(Integer cid) {
 
 		try {
@@ -530,29 +511,7 @@ public class InfoDao {
 		/*
 		 * 求当前页的集合数据
 		 */
-		List<Info> list = findByPage(currentPage, pageSize, keywords);
-
-		/*
-		 * 将类别放进去
-		 */
-		CategoryDao categoryDao = new CategoryDao();
-		for (Info thisInfo : list) {
-			thisInfo.setCategory(categoryDao.findCategoryByCid(thisInfo.getCid()));
-		}
-		/*
-		 * 装进PageBean
-		 */
-		PageBean<Info> pb = new PageBean<Info>();
-		pb.setCount(count);
-		pb.setCurrentPage(currentPage);
-		pb.setList(list);
-		pb.setPageSize(pageSize);
-		pb.setTotalPage(totalPage);
-		return pb;
-	}
-
-	public List<Info> findByPage(int currentPage, int pageSize, String keywords) {
-
+		List<Info> list = null;
 		try {
 			connection = ConnectionMySQL.getCon();
 
@@ -585,13 +544,27 @@ public class InfoDao {
 				 */
 				infoList.add(info);
 			}
-
-			return infoList;
-
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
+
+		/*
+		 * 将类别放进去
+		 */
+		CategoryDao categoryDao = new CategoryDao();
+		for (Info thisInfo : list) {
+			thisInfo.setCategory(categoryDao.findCategoryByCid(thisInfo.getCid()));
+		}
+		/*
+		 * 装进PageBean
+		 */
+		PageBean<Info> pb = new PageBean<Info>();
+		pb.setCount(count);
+		pb.setCurrentPage(currentPage);
+		pb.setList(list);
+		pb.setPageSize(pageSize);
+		pb.setTotalPage(totalPage);
+		return pb;
 	}
 
 }
